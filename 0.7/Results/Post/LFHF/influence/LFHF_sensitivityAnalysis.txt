@@ -1,0 +1,14 @@
+                                       HetContrib InfluenceEffectSize
+Omitting Vosseler et al. (2020)            20.086               0.667
+Omitting Gauthey et al. (2020) Ex.1 #1      7.220               0.748
+Omitting Zhu et al. (2022)                  3.146               0.188
+Omitting Geng er al. (2022)                 2.457               0.123
+Omitting Gauthey et al. (2020) Ex.1 #2      1.882               0.206
+Omitting Shen et al. (2021) Ex.2            1.655               0.242
+Omitting Tarasenko et al. (2022)            1.327               0.111
+Omitting Shen et al. (2021) Ex.1            0.345               0.053
+Omitting Antonino et al. (2017) #2          0.114               0.005
+Omitting Decouck et al. (2016) Ex.1 #1      0.103               0.012
+Omitting Ganchrva et al. (2017)             0.048               0.002
+Omitting Decouck et al. (2016) Ex.1 #2      0.016               0.002
+Omitting Antonino et al. (2017) #1          0.000               0.000

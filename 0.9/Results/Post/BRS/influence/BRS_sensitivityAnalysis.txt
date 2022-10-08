@@ -1,0 +1,5 @@
+                                     HetContrib InfluenceEffectSize
+Omitting Bretherton et al. (2019) #1     13.502               0.375
+Omitting Ganchrva et al. (2017)           3.973               7.525
+Omitting Antonino et al. (2017) #1        1.936               0.372
+Omitting Antonino et al. (2017) #2        1.285               0.240

@@ -1,0 +1,1 @@
+No outliers detected (random-effects model).

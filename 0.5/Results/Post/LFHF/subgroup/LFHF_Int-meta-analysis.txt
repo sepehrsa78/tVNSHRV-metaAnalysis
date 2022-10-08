@@ -1,0 +1,40 @@
+Review:     LFHF _tVNS
+
+Number of studies combined: k = 13
+
+                         SMD            95%-CI     t p-value
+Random effects model -0.0777 [-0.3756; 0.2203] -0.57  0.5805
+
+Quantifying heterogeneity:
+ tau^2 = 0.1081 [0.0127; 0.6519]; tau = 0.3287 [0.1125; 0.8074]
+ I^2 = 53.5% [12.8%; 75.2%]; H = 1.47 [1.07; 2.01]
+
+Quantifying residual heterogeneity:
+ tau^2 = 0.1153 [0.0000; 1.4750]; tau = 0.3395 [0.0000; 1.2145]
+ I^2 = 56.5% [0.0%; 81.3%]; H = 1.52 [1.00; 2.31]
+
+Test of heterogeneity:
+     Q d.f. p-value
+ 25.79   12  0.0115
+
+Results for subgroups (random effects model):
+                           k     SMD            95%-CI  tau^2    tau     Q   I^2
+intervention = tragus      1 -0.0190 [-1.0464; 1.0084] 0.1153 0.3395  0.00    --
+intervention = earlobe     1  0.0936 [-0.9390; 1.1261] 0.1153 0.3395  0.00    --
+intervention = L-conchca   3 -0.4864 [-2.7216; 1.7487] 0.1153 0.3395 10.91 81.7%
+intervention = R-concha    3  0.2611 [-0.4865; 1.0086] 0.1153 0.3395  2.56 22.0%
+intervention = L-tragus    2 -0.3737 [-1.6278; 0.8804] 0.1153 0.3395  0.16  0.0%
+intervention = L-concha    2  0.1567 [-0.6747; 0.9882] 0.1153 0.3395  0.16  0.0%
+intervention = BL-concha   1 -0.5034 [-1.4425; 0.4357] 0.1153 0.3395  0.00    --
+
+Test for subgroup differences (random effects model):
+                   Q d.f. p-value
+Between groups 24.32    6  0.0005
+Within groups  13.81    6  0.0319
+
+Details on meta-analytical method:
+- Inverse variance method
+- Restricted maximum-likelihood estimator for tau^2
+  (assuming common tau^2 in subgroups)
+- Q-profile method for confidence interval of tau^2 and tau
+- Hartung-Knapp adjustment for random effects model
