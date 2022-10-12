@@ -10,15 +10,17 @@ library(metafor)
 library(numDeriv)
 library(knitr)
 library(PerformanceAnalytics)
-library(rmarkdown)
+library(here)
 
 # loading data
 
-dataPath <- "C:\\Users\\Client\\OneDrive - ut.ac.ir\\Desktop\\Projects\\VNS HRV\\Update\\Data"
-resultPathPost <- "C:\\Users\\Client\\OneDrive - ut.ac.ir\\Desktop\\Projects\\VNS HRV\\Update\\Code\\Results\\Post"
-resultPathDur <- "C:\\Users\\Client\\OneDrive - ut.ac.ir\\Desktop\\Projects\\VNS HRV\\Update\\Code\\Results\\Dur"
-Params <- c("LF", "HF", "LFHF", "RMSSD", "SDNN", "PNN50", "BRS")
+here <- here()
+here <- gsub("/", "\\\\", here)
 corr <- 0.7
+dataPath <- paste(here, "Data", sep = "\\")
+resultPathPost <- paste(here, str_c(corr), "Results\\Post", sep = "\\")
+resultPathDur <- paste(here, str_c(corr), "Results\\Dur", sep = "\\")
+Params <- c("LF", "HF", "LFHF", "RMSSD", "SDNN", "PNN50", "BRS")
 
 for (param in Params){
   if (param != "RMSSD"){

@@ -10,15 +10,17 @@ library(metafor)
 library(numDeriv)
 library(knitr)
 library(PerformanceAnalytics)
-library(rmarkdown)
+library(here)
 
 # loading data
 
-dataPath <- "C:\\Users\\Client\\OneDrive - ut.ac.ir\\Desktop\\Projects\\VNS HRV\\Update\\Data"
-resultPathPost <- "C:\\Users\\Client\\OneDrive - ut.ac.ir\\Desktop\\Projects\\VNS HRV\\Update\\0.9\\Results\\Post"
-resultPathDur <- "C:\\Users\\Client\\OneDrive - ut.ac.ir\\Desktop\\Projects\\VNS HRV\\Update\\0.9\\Results\\Dur"
-Params <- c("LF", "HF", "LFHF", "RMSSD", "SDNN", "PNN50", "BRS")
+here <- here()
+here <- gsub("/", "\\\\", here)
 corr <- 0.9
+dataPath <- paste(here, "Data", sep = "\\")
+resultPathPost <- paste(here, str_c(corr), "Results\\Post", sep = "\\")
+resultPathDur <- paste(here, str_c(corr), "Results\\Dur", sep = "\\")
+Params <- c("LF", "HF", "LFHF", "RMSSD", "SDNN", "PNN50", "BRS")
 
 for (param in Params){
   if (param != "RMSSD"){
@@ -159,7 +161,7 @@ for (param in Params){
               prediction = TRUE,
               leftlabs = c("Study"),
               leftcols = c("studlab"),
-              colgap.forest.left = "3cm"
+              colgap.forest.left = "5cm"
   )
   dev.off()
   
@@ -187,7 +189,7 @@ for (param in Params){
               prediction = TRUE,
               leftlabs = c("Study"),
               leftcols = c("studlab"),
-              colgap.forest.left = "3cm"
+              colgap.forest.left = "5cm"
   )
   dev.off()
   
@@ -207,7 +209,7 @@ for (param in Params){
               prediction = TRUE,
               leftlabs = c("Study"),
               leftcols = c("studlab"),
-              colgap.forest.left = "3cm"
+              colgap.forest.left = "5cm"
   )
   dev.off()
   
@@ -227,7 +229,7 @@ for (param in Params){
               prediction = TRUE,
               leftlabs = c("Study"),
               leftcols = c("studlab"),
-              colgap.forest.left = "3cm"
+              colgap.forest.left = "5cm"
   )
   dev.off()
   
@@ -247,7 +249,7 @@ for (param in Params){
               prediction = TRUE,
               leftlabs = c("Study"),
               leftcols = c("studlab"),
-              colgap.forest.left = "3.5cm"
+              colgap.forest.left = "5cm"
   )
   dev.off()
   
@@ -267,7 +269,7 @@ for (param in Params){
               prediction = TRUE,
               leftlabs = c("Study"),
               leftcols = c("studlab"),
-              colgap.forest.left = "3.5cm"
+              colgap.forest.left = "5cm"
   )
   dev.off()
   
@@ -572,7 +574,7 @@ for (param in Params){
                 prediction = TRUE,
                 leftlabs = c("Study"),
                 leftcols = c("studlab"),
-                colgap.forest.left = "3cm"
+                colgap.forest.left = "5cm"
     )
     dev.off()
     
