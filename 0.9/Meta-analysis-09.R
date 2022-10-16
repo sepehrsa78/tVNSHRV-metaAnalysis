@@ -24,7 +24,7 @@ Params <- c("LF", "HF", "LFHF", "RMSSD", "SDNN", "PNN50", "BRS")
 
 for (param in Params){
   if (param != "RMSSD"){
-    data <- read_excel(file.path(dataPath, "HRV_Params.xlsx"), 
+    data <- read_excel(file.path(dataPath, "HRV_Params.xlsx", fsep = "\\"), 
                        col_types = c("text", "text", "skip", 
                                      "skip", "numeric", "text", "text", 
                                      "numeric", "skip", "text", "skip", 
@@ -32,7 +32,7 @@ for (param in Params){
                                      "numeric", "text", "text", "text", "text", 
                                      "text", "numeric", "numeric", "text"), sheet = param)
   } else{
-    data <- read_excel(file.path(dataPath, "HRV_Params.xlsx"), 
+    data <- read_excel(file.path(dataPath, "HRV_Params.xlsx", fsep = "\\"), 
                        col_types = c("text", "text", "skip", 
                                      "skip", "numeric", "text", "text", 
                                      "numeric", "skip", "text", "skip", 
@@ -84,7 +84,7 @@ for (param in Params){
   
   
   dataExcept <- data %>% filter(is.na(mean.pre.active) & is.na(mean.pre.sham) &
-                                          !is.na(mean.difference.sham) & !is.na(mean.difference.active))
+                                  !is.na(mean.difference.sham) & !is.na(mean.difference.active))
   exceptNum <- nrow(dataExcept)
   
   data_control <- bind_rows(data_control, dataExcept)
@@ -471,9 +471,6 @@ for (param in Params){
     
     dev.off()
     
-    
-    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_MInference.png", sep = "")), width = 2800, height = 2400, res = 300)
-    
     minf <- multimodel.inference(TE = "es", 
                                  seTE = "se",
                                  data = data_control,
@@ -484,16 +481,23 @@ for (param in Params){
                                                 "age.total"),
                                  interaction = F)
     
+    
+    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_MInference.png", sep = "")), width = 2800, height = 2400, res = 300)
+    
+    plot(minf)
+    
     dev.off()
+    
+    
     
     sink(file.path(resultPathPost, param, "meta-regression", paste(param, "_modelSelection.txt", sep = ""), fsep = "\\")); print(minf); sink()
   }
   
   # dur-pre Meta-analysis
-
+  
   dataDur <- data %>% filter(design == "control" &
-                    !is.na(mean.pre.active) & !is.na(mean.pre.sham) &
-                    !is.na(mean.dur.sham) & !is.na(mean.dur.active))
+                               !is.na(mean.pre.active) & !is.na(mean.pre.sham) &
+                               !is.na(mean.dur.sham) & !is.na(mean.dur.active))
   
   if (nrow(dataDur) >= 3){
     

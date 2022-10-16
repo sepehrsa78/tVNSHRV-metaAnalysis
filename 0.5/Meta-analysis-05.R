@@ -9,6 +9,7 @@ library(metasens)
 library(metafor)
 library(numDeriv)
 library(knitr)
+library(PerformanceAnalytics)
 library(here)
 
 # loading data
@@ -470,9 +471,6 @@ for (param in Params){
     
     dev.off()
     
-    
-    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_MInference.png", sep = "")), width = 2800, height = 2400, res = 300)
-    
     minf <- multimodel.inference(TE = "es", 
                                  seTE = "se",
                                  data = data_control,
@@ -482,6 +480,11 @@ for (param in Params){
                                                 "pulse.width",
                                                 "age.total"),
                                  interaction = F)
+    
+    
+    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_MInference.png", sep = "")), width = 2800, height = 2400, res = 300)
+    
+    plot(minf)
     
     dev.off()
     

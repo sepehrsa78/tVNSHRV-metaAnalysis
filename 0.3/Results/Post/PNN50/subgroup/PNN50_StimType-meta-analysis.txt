@@ -10,22 +10,22 @@ Quantifying heterogeneity:
  I^2 = 36.7% [0.0%; 79.9%]; H = 1.26 [1.00; 2.23]
 
 Quantifying residual heterogeneity:
- tau^2 = 0 [0.0000; 3.7453]; tau = 0 [0.0000; 1.9353]
- I^2 = 0.0%; H = 1.00
+ tau^2 = 0.3057 [0.0000; 100.0000]; tau = 0.5529 [0.0000; 10.0000]
+ I^2 = 66.9% [0.0%; 92.5%]; H = 1.74 [1.00; 3.65]
 
 Test of heterogeneity:
     Q d.f. p-value
  3.16    2  0.2062
 
 Results for subgroups (random effects model):
-                         k    SMD            95%-CI tau^2 tau    Q  I^2
-stim.type = continuous   1 0.9802 [ 0.0315; 1.9289]     0   0 0.00   --
-stim.type = N/A          2 0.0673 [-0.4826; 0.6171]     0   0 0.05 0.0%
+                         k    SMD            95%-CI  tau^2    tau    Q   I^2
+stim.type = continuous   2 0.4153 [-5.5570; 6.3877] 0.3057 0.5529 3.02 66.9%
+stim.type = slow burst   1 0.1108 [-1.0888; 1.3103] 0.3057 0.5529 0.00    --
 
 Test for subgroup differences (random effects model):
                   Q d.f. p-value
-Between groups 3.53    1  0.0603
-Within groups  0.05    1  0.8152
+Between groups 0.16    1  0.6931
+Within groups  3.02    1  0.0822
 
 Details on meta-analytical method:
 - Inverse variance method

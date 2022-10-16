@@ -18,12 +18,12 @@ Global model call: metafor::rma(yi = TE, sei = seTE, mods = form, data = glm.dat
     method = method, test = test)
 ---
 Model selection table 
-  (Int)   age.ttl chr.per.sss       frq   pls.wdt df logLik AICc delta weight
-1     +                                            2  3.644 -2.2  0.00  0.701
-2     + -0.001132                                  3  3.529  1.3  3.54  0.120
-5     +                       8.286e-05            3  3.082  2.2  4.43  0.076
-3     +               0.00737                      3  3.479  2.5  4.67  0.068
-9     +                                 -0.000169  3  2.810  3.8  6.00  0.035
+   (Int)   age.ttl chr.per.sss       frq rms.val df logLik AICc delta weight
+1      +                                          2  3.644 -2.2  0.00  0.565
+3      +              0.005785                    3  4.144  0.1  2.31  0.178
+17     +                                  0.2061  3  3.553  1.3  3.49  0.099
+2      + -0.001132                                3  3.529  1.3  3.54  0.096
+5      +                       8.286e-05          3  3.082  2.2  4.43  0.062
 Models ranked by AICc(x) 
 
 
@@ -32,12 +32,12 @@ Multimodel Inference Coefficients
 
 
                         Estimate   Std. Error    z value  Pr(>|z|)
-intrcpt             2.436211e-02 6.364285e-02 0.38279412 0.7018724
-age.total          -1.448328e-04 1.824891e-03 0.07936515 0.9367422
-frequency          -7.249278e-06 4.218688e-04 0.01718373 0.9862900
-charge.per.session  5.486549e-04 1.984347e-03 0.27649136 0.7821707
-pulse.width        -6.708065e-06 5.167993e-05 0.12980020 0.8967245
-rms.value           6.274605e-03 4.487320e-02 0.13982969 0.8887946
+intrcpt             9.019663e-03 6.747058e-02 0.13368290 0.8936533
+charge.per.session  1.234081e-03 2.512521e-03 0.49117266 0.6233043
+rms.value           2.330384e-02 8.009704e-02 0.29094507 0.7710933
+age.total          -5.816314e-05 1.759945e-03 0.03304827 0.9736361
+frequency           4.614122e-06 6.920585e-05 0.06667243 0.9468425
+pulse.width        -6.437939e-06 5.288768e-05 0.12172852 0.9031140
 
 
 Predictor Importance
@@ -45,8 +45,8 @@ Predictor Importance
 
 
                model importance
-1          age.total 0.12865433
-2          frequency 0.08732755
-3 charge.per.session 0.07447409
-4        pulse.width 0.03695217
-5          rms.value 0.03288548
+1 charge.per.session 0.21203803
+2          age.total 0.12662950
+3          rms.value 0.12577848
+4          frequency 0.08400203
+5        pulse.width 0.03151729
