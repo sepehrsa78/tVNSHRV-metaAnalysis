@@ -1,0 +1,26 @@
+Identified outliers (random-effects model) 
+------------------------------------------ 
+"Geng et al. (2022)" 
+ 
+Results with outliers removed 
+----------------------------- 
+Review:     SDNN _tVNS
+
+Number of studies combined: k = 6
+
+                        SMD           95%-CI    t p-value
+Random effects model 0.1498 [0.0540; 0.2456] 4.02  0.0101
+
+Quantifying heterogeneity:
+ tau^2 = 0 [0.0000; 0.0350]; tau = 0 [0.0000; 0.1872]
+ I^2 = 0.0% [0.0%; 74.6%]; H = 1.00 [1.00; 1.99]
+
+Test of heterogeneity:
+    Q d.f. p-value
+ 2.88    5  0.7189
+
+Details on meta-analytical method:
+- Inverse variance method
+- Restricted maximum-likelihood estimator for tau^2
+- Q-profile method for confidence interval of tau^2 and tau
+- Hartung-Knapp adjustment for random effects model

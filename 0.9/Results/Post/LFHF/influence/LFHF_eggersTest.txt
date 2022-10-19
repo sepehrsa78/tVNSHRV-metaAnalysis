@@ -1,7 +1,0 @@
-Eggers' test of the intercept 
-============================= 
-
- intercept         95% CI      t          p
-    -5.601 -10.18 - -1.02 -2.399 0.03529801
-
-Eggers' test indicates the presence of funnel plot asymmetry. 

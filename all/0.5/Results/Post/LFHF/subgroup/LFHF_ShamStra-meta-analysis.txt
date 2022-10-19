@@ -1,0 +1,37 @@
+Review:     LFHF _tVNS
+
+Number of studies combined: k = 12
+
+                         SMD            95%-CI     t p-value
+Random effects model -0.0642 [-0.3920; 0.2636] -0.43  0.6747
+
+Quantifying heterogeneity:
+ tau^2 = 0.1264 [0.0175; 0.7671]; tau = 0.3556 [0.1324; 0.8759]
+ I^2 = 56.0% [15.9%; 76.9%]; H = 1.51 [1.09; 2.08]
+
+Quantifying residual heterogeneity:
+ tau^2 = 0.2008 [0.0363; 1.2821]; tau = 0.4481 [0.1906; 1.1323]
+ I^2 = 64.4% [27.3%; 82.6%]; H = 1.68 [1.17; 2.40]
+
+Test of heterogeneity:
+     Q d.f. p-value
+ 24.98   11  0.0092
+
+Results for subgroups (random effects model):
+                         k     SMD            95%-CI  tau^2    tau     Q   I^2
+sham.strategy = tragus   2  0.0371 [-0.6781; 0.7523] 0.2008 0.4481  0.04  0.0%
+sham.strategy = concha   4  0.0523 [-0.1649; 0.2694] 0.2008 0.4481  0.95  0.0%
+sham.strategy = ear      5 -0.1628 [-1.2209; 0.8952] 0.2008 0.4481 21.49 81.4%
+sham.strategy = other    1 -0.5034 [-1.6037; 0.5969] 0.2008 0.4481  0.00    --
+
+Test for subgroup differences (random effects model):
+                   Q d.f. p-value
+Between groups  1.25    3  0.7407
+Within groups  22.48    8  0.0041
+
+Details on meta-analytical method:
+- Inverse variance method
+- Restricted maximum-likelihood estimator for tau^2
+  (assuming common tau^2 in subgroups)
+- Q-profile method for confidence interval of tau^2 and tau
+- Hartung-Knapp adjustment for random effects model

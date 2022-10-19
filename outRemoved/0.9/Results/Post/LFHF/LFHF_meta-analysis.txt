@@ -1,0 +1,20 @@
+Review:     LFHF _tVNS
+
+Number of studies combined: k = 10
+
+                         SMD            95%-CI     t p-value
+Random effects model -0.1521 [-0.5691; 0.2649] -0.83  0.4306
+
+Quantifying heterogeneity:
+ tau^2 = 0.2822 [0.1168; 1.1685]; tau = 0.5313 [0.3418; 1.0809]
+ I^2 = 87.4% [78.9%; 92.5%]; H = 2.82 [2.18; 3.66]
+
+Test of heterogeneity:
+     Q d.f.  p-value
+ 71.71    9 < 0.0001
+
+Details on meta-analytical method:
+- Inverse variance method
+- Restricted maximum-likelihood estimator for tau^2
+- Q-profile method for confidence interval of tau^2 and tau
+- Hartung-Knapp adjustment for random effects model

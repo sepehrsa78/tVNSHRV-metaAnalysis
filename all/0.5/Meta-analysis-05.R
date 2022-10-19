@@ -1,0 +1,607 @@
+library(readxl)
+library(unglue)
+library(tidyverse)
+library(dmetar)
+library(meta)
+library(esc)
+library(magrittr)
+library(metasens)
+library(metafor)
+library(numDeriv)
+library(knitr)
+library(PerformanceAnalytics)
+library(here)
+
+# loading data
+
+here <- here()
+here <- gsub("/", "\\\\", here)
+corr <- 0.5
+dataPath <- paste(here, "all", "Data", sep = "\\")
+resultPathPost <- paste(here, "all", str_c(corr), "Results\\Post", sep = "\\")
+resultPathDur <- paste(here, "all", str_c(corr), "Results\\Dur", sep = "\\")
+Params <- c("LF", "HF", "LFHF", "RMSSD", "SDNN", "PNN50", "BRS")
+
+for (param in Params){
+  if (param != "RMSSD"){
+    data <- read_excel(file.path(dataPath, "HRV_Params.xlsx"), 
+                       col_types = c("text", "text", "skip", 
+                                     "skip", "numeric", "text", "text", 
+                                     "numeric", "skip", "text", "skip", 
+                                     "skip", "text", "text", "text", "text", "text", 
+                                     "numeric", "text", "text", "text", "text", 
+                                     "text", "numeric", "numeric", "text"), sheet = param)
+  } else{
+    data <- read_excel(file.path(dataPath, "HRV_Params.xlsx"), 
+                       col_types = c("text", "text", "skip", 
+                                     "skip", "numeric", "text", "text", 
+                                     "numeric", "skip", "text", "skip", 
+                                     "skip", "text", "text", "text", "text", "text", 
+                                     "numeric", "text", "text", "text", "text", 
+                                     "text", "numeric", "numeric", "text", "numeric",
+                                     "numeric", "numeric", "numeric"), sheet = param)
+  }
+  
+  for (folder in c("", "influence", "meta-regression", "subgroup")){
+    if (file.exists(file.path(resultPathPost, param, folder, fsep = "\\"))){
+      next
+    } else{
+      dir.create(file.path(resultPathPost, param, folder, fsep = "\\"), showWarnings = FALSE)
+    }
+  }
+  
+  
+  if (!file.exists(file.path(resultPathDur, param, fsep = "\\"))){
+    dir.create(file.path(resultPathDur, param, fsep = "\\"), showWarnings = FALSE)
+  }
+  
+  data %<>% 
+    mutate(mean.difference.active = as.numeric(unglue_vec(data$difference.active, c("{x} ± {y}", "{x} ±{y}"), var = "x")),
+           sd.difference.active = as.numeric(unglue_vec(data$difference.active, c("{x} ± {y}", "{x} ±{y}"), var = "y")),
+           mean.difference.sham = as.numeric(unglue_vec(data$difference.sham, c("{x} ± {y}", "{x} ±{y}"), var = "x")),
+           sd.difference.sham = as.numeric(unglue_vec(data$difference.sham, c("{x} ± {y}", "{x} ±{y}"), var = "y")),
+           mean.pre.active = as.numeric(unglue_vec(data$pre.active, c("{x} ± {y}", "{x} ±{y}"), var = "x")),
+           sd.pre.active = as.numeric(unglue_vec(data$pre.active, c("{x} ± {y}", "{x} ±{y}"), var = "y")),
+           mean.dur.active = as.numeric(unglue_vec(data$dur.active, c("{x} ± {y}", "{x} ±{y}"), var = "x")),
+           sd.dur.active = as.numeric(unglue_vec(data$dur.active, c("{x} ± {y}", "{x} ±{y}"), var = "y")),
+           mean.post.active = as.numeric(unglue_vec(data$post.active, c("{x} ± {y}", "{x} ±{y}"), var = "x")),
+           sd.post.active = as.numeric(unglue_vec(data$post.active, c("{x} ± {y}", "{x} ±{y}"), var = "y")),
+           mean.pre.sham = as.numeric(unglue_vec(data$pre.sham, c("{x} ± {y}", "{x} ±{y}"), var = "x")),
+           sd.pre.sham = as.numeric(unglue_vec(data$pre.sham, c("{x} ± {y}", "{x} ±{y}"), var = "y")),
+           mean.dur.sham = as.numeric(unglue_vec(data$pre.sham, c("{x} ± {y}", "{x} ±{y}"), var = "x")),
+           sd.dur.sham = as.numeric(unglue_vec(data$pre.sham, c("{x} ± {y}", "{x} ±{y}"), var = "y")),
+           mean.post.sham = as.numeric(unglue_vec(data$post.sham, c("{x} ± {y}", "{x} ±{y}"), var = "x")),
+           sd.post.sham = as.numeric(unglue_vec(data$post.sham, c("{x} ± {y}", "{x} ±{y}"), var = "y")))
+  
+  data %<>% select(-pre.active, -dur.active, -post.active, -pre.sham, -dur.sham, -post.sham)
+  data$n.sham <- as.numeric(data$n.sham)
+  data$age.total <-  as.numeric(unglue_vec(data$age.total, c("{x} ± {y}", "{x}"), var = "x"))
+  data <- data %>% mutate(ri = rep(corr, length(data$Author)))
+  
+  data_control <- data %>% filter(design == "control" &
+                                    !is.na(mean.pre.active) & !is.na(mean.pre.sham) &
+                                    !is.na(mean.post.sham) & !is.na(mean.post.active)) 
+  
+  
+  dataExcept <- data %>% filter(is.na(mean.pre.active) & is.na(mean.pre.sham) &
+                                          !is.na(mean.difference.sham) & !is.na(mean.difference.active))
+  exceptNum <- nrow(dataExcept)
+  
+  data_control <- bind_rows(data_control, dataExcept)
+  
+  #Computing Standardized Mean Change for Each Group
+  
+  treatment_ef <- escalc(measure = "SMCR",
+                         m1i = mean.post.active,
+                         m2i = mean.pre.active,
+                         sd1i = sd.pre.active,
+                         ni = n.active,
+                         ri = ri,
+                         data = data_control)
+  control_ef <-  escalc(measure = "SMCR",
+                        m1i = mean.post.sham,
+                        m2i = mean.pre.sham,
+                        sd1i = sd.pre.sham,
+                        ni = n.sham,
+                        ri = ri,
+                        data = data_control)
+  
+  data_control %<>% mutate(es = treatment_ef$yi - control_ef$yi,
+                           se = treatment_ef$vi + control_ef$vi)
+  
+  # See if there is any study with no pre-post data (just includes difference score data)
+  
+  if (exceptNum != 0){
+    for (ind in 1:exceptNum){
+      
+      exTreatment <- escalc(measure = "SMCC",
+                            m1i = dataExcept$mean.difference.active[ind],
+                            m2i = 0,
+                            sd1i = dataExcept$sd.difference.active[ind],
+                            sd2i = 0,
+                            ni = dataExcept$n.active[ind],
+                            ri = corr)
+      exControl <- escalc(measure = "SMCC",
+                          m1i = dataExcept$mean.difference.sham[ind],
+                          m2i = 0,
+                          sd1i = dataExcept$sd.difference.sham[ind],
+                          sd2i = 0,
+                          ni = dataExcept$n.sham[ind],
+                          ri = corr)
+      data_control$es[data_control$Author == dataExcept$Author[ind]] <- exTreatment$yi - exControl$yi
+      data_control$se[data_control$Author == dataExcept$Author[ind]] <- exTreatment$vi + exControl$vi
+      
+    }
+  }
+  
+  data_control$se <- data_control$se ^ .5
+  
+  # Pooled effects
+  
+  m.gen <- metagen(TE = es,
+                   seTE = se,
+                   studlab = Author,
+                   data = data_control,
+                   sm = "SMD",
+                   fixed = FALSE,
+                   random = TRUE,
+                   method.tau = "REML",
+                   hakn = TRUE,
+                   title = paste(param, "_tVNS"))
+  
+  sink(file.path(resultPathPost, param, paste(param, "_meta-analysis.txt", sep = ""), fsep = "\\")); print(m.gen); sink()
+  
+  # Export graphs
+  
+  png(file = file.path(resultPathPost, param, paste(param, "_forestplot.png", sep = "")), width = 2800, height = 2400, res = 300)
+  forest.meta(m.gen, 
+              layout = "meta",
+              sortvar = TE,
+              print.tau2 = TRUE,
+              prediction = TRUE,
+              leftlabs = c("Study"),
+              leftcols = c("studlab"),
+              colgap.forest.left = "5cm"
+  )
+  dev.off()
+  
+  png(file = file.path(resultPathPost, param, paste(param, "_drapery.png", sep = "")), width = 3500, height = 3500, res = 300)
+  drapery(m.gen, 
+          labels = FALSE,
+          study.results = TRUE,
+          type = "pval", 
+          legend = TRUE)
+  dev.off()
+  
+  # Subgroup - Intervention
+  
+  m.gen_int <- update.meta(m.gen, 
+                           subgroup = data_control$intervention, 
+                           tau.common = TRUE)
+  
+  sink(file.path(resultPathPost, param, "subgroup", paste(param, "_Int-meta-analysis.txt", sep = ""), fsep = "\\")); print(m.gen_int); sink()
+  
+  png(file = file.path(resultPathPost, param, "subgroup", paste(param,"_Int_forestplot.png", sep = "")), width = 2800, height = 2400, res = 300)
+  forest.meta(m.gen_int, 
+              layout = "meta",
+              sortvar = TE,
+              print.tau2 = TRUE,
+              prediction = TRUE,
+              leftlabs = c("Study"),
+              leftcols = c("studlab"),
+              colgap.forest.left = "5cm"
+  )
+  dev.off()
+  
+  # Subgroup - sham strategy
+  
+  m.gen_sham_stra <- update.meta(m.gen, 
+                                 subgroup = data_control$sham.strategy, 
+                                 tau.common = TRUE)
+  
+  sink(file.path(resultPathPost, param, "subgroup", paste(param, "_ShamStra-meta-analysis.txt", sep = ""), fsep = "\\")); print(m.gen_sham_stra); sink()
+  
+  png(file = file.path(resultPathPost, param, "subgroup", paste(param, "_ShamStrategy_forestplot.png", sep = "")), width = 2800, height = 2400, res = 300)
+  forest.meta(m.gen_sham_stra, 
+              layout = "meta",
+              sortvar = TE,
+              print.tau2 = TRUE,
+              prediction = TRUE,
+              leftlabs = c("Study"),
+              leftcols = c("studlab"),
+              colgap.forest.left = "5cm"
+  )
+  dev.off()
+  
+  # Subgroup - frequency
+  
+  m.gen_sham_fre <- update.meta(m.gen, 
+                                subgroup = data_control$frequency, 
+                                tau.common = TRUE)
+  
+  sink(file.path(resultPathPost, param, "subgroup", paste(param, "_fre-meta-analysis.txt", sep = ""), fsep = "\\")); print(m.gen_sham_fre); sink()
+  
+  png(file = file.path(resultPathPost, param, "subgroup", paste(param, "_fre_forestplot.png", sep = "")), width = 2800, height = 2400, res = 300)
+  forest.meta(m.gen_sham_fre, 
+              layout = "meta",
+              sortvar = TE,
+              print.tau2 = TRUE,
+              prediction = TRUE,
+              leftlabs = c("Study"),
+              leftcols = c("studlab"),
+              colgap.forest.left = "5cm"
+  )
+  dev.off()
+  
+  # Subgroup - pulse width
+  
+  m.gen_pulse <- update.meta(m.gen, 
+                             subgroup = data_control$pulse.width, 
+                             tau.common = TRUE)
+  
+  sink(file.path(resultPathPost, param, "subgroup", paste(param, "_pulse-meta-analysis.txt", sep = ""), fsep = "\\")); print(m.gen_pulse); sink()
+  
+  png(file = file.path(resultPathPost, param, "subgroup", paste(param, "_pulse_forestplot.png", sep = "")), width = 2800, height = 2400, res = 300)
+  forest.meta(m.gen_pulse, 
+              layout = "meta",
+              sortvar = TE,
+              print.tau2 = TRUE,
+              prediction = TRUE,
+              leftlabs = c("Study"),
+              leftcols = c("studlab"),
+              colgap.forest.left = "5cm"
+  )
+  dev.off()
+  
+  # Subgroup - Stim Type
+  
+  m.gen_stim_type <- update.meta(m.gen, 
+                                 subgroup = data_control$stim.type, 
+                                 tau.common = TRUE)
+  
+  sink(file.path(resultPathPost, param, "subgroup", paste(param, "_StimType-meta-analysis.txt", sep = ""), fsep = "\\")); print(m.gen_stim_type); sink()
+  
+  png(file = file.path(resultPathPost, param, "subgroup", paste(param, "_stim_type_forestplot.png", sep = "")), width = 2800, height = 2400, res = 300)
+  forest.meta(m.gen_stim_type, 
+              layout = "meta",
+              sortvar = TE,
+              print.tau2 = TRUE,
+              prediction = TRUE,
+              leftlabs = c("Study"),
+              leftcols = c("studlab"),
+              colgap.forest.left = "5cm"
+  )
+  dev.off()
+  
+  # Publication_Bias --------------------------------------------------------
+  
+  # Produce funnel plot
+  
+  png(file = file.path(resultPathPost, param, paste(param, "_funnel.png", sep = "")), width = 2800, height = 2400, res = 300)
+  funnel.meta(m.gen,
+              studlab = T)
+  
+  # Add title
+  
+  title("Funnel Plot")
+  dev.off()
+  
+  # contour-enhanced funnel plots -------------------------------------------
+  #Such plots can help distinguish publication bias from other forms of asymmetry
+  
+  png(file = file.path(resultPathPost, param, paste(param, "_funnel_enhanced.png", sep = "")), width = 2800, height = 2400, res = 300)
+  
+  # Define fill colors for contour
+  
+  col.contour = c("gray50", "gray85", "gray95")
+  funnel.meta(m.gen,
+              contour = c(0.9, 0.95, 0.99),
+              col.contour = col.contour)
+  
+  # Add a legend
+  
+  legend(x = 0.43, y = -0.009, 
+         legend = c("p < 0.1", "p < 0.05", "p < 0.01"),
+         fill = col.contour)
+  
+  # Add a title
+  
+  title("Contour-Enhanced Funnel Plot")
+  dev.off()
+  
+  # Eager's Regression Test for further investigating bias
+  
+  eggTest <- eggers.test(m.gen)
+  sink(file.path(resultPathPost, param, "influence", paste(param, "_eggersTest.txt", sep = ""), fsep = "\\")); print(eggTest); sink()
+  
+  
+  # outlier detect ----------------------------------------------------------
+  
+  findOut <- find.outliers(m.gen)
+  
+  sink(file.path(resultPathPost, param, "influence", paste(param, "_outlierDetect.txt", sep = ""), fsep = "\\")); print(findOut); sink()
+  
+  m.gen.inf <- InfluenceAnalysis(m.gen, random = TRUE)
+  infSum <- summary(m.gen.inf)
+  
+  sink(file.path(resultPathPost, param, "influence", paste(param, "_sensitivityAnalysis.txt", sep = ""), fsep = "\\")); print(infSum); sink()
+  
+  #The InfluenceAnalysis function creates four influence diagnostic plots:
+  # a Baujat plot, influence diagnostics according to Viechtbauer and Cheung (2010),
+  #and the leave-one-out meta-analysis results, sorted by effect size and 
+  #I^2value. We can open each of these plots individually using the plot function
+  
+  png(file = file.path(resultPathPost, param, "influence", paste(param, "_baujat.png", sep = "")), width = 2800, height = 2400, res = 300)
+  plot(m.gen.inf, "baujat")
+  dev.off()
+  
+  png(file = file.path(resultPathPost, param, "influence", paste(param, "_influence.png", sep = "")), width = 2800, height = 2400, res = 300)
+  plot(m.gen.inf, "influence")
+  dev.off()
+  
+  #Leave-One-Out Meta-Analysis Results
+  png(file = file.path(resultPathPost, param, "influence", paste(param, "_es_leave_one_out.png", sep = "")), width = 2800, height = 2400, res = 300)
+  plot(m.gen.inf, "es")
+  dev.off()
+  
+  png(file = file.path(resultPathPost, param, "influence", paste(param, "_i2_leave_one_out.png", sep = "")), width = 2800, height = 2400, res = 300)
+  plot(m.gen.inf, "i2")
+  dev.off()
+  
+  # Checking for Multi-Collinearity
+  
+  if (param != "PNN50"){
+    
+    data_control$pulse.width <- as.numeric(data_control$pulse.width)
+    data_control$rms.value <- data_control$rms.value * 1000
+    data_control$charge.per.session <- data_control$charge.per.session * 1000
+    
+    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_Multi-Collinearity.png", sep = "")), width = 2800, height = 2400, res = 300)
+    
+    data_control[,c("male.ratio",
+                    "age.total",
+                    "rms.value",
+                    "charge.per.session",
+                    "frequency",
+                    "pulse.width")] %>% chart.Correlation(histogram = T)
+    
+    dev.off()
+    
+    # Meta-regression
+    
+    m.charge <- rma(yi = es,
+                    sei = se,
+                    data = data_control,
+                    method = "ML",
+                    mods = charge.per.session,
+                    test = "knha")
+    
+    sink(file.path(resultPathPost, param, "meta-regression", paste(param, "_chargeReg.txt", sep = ""), fsep = "\\")); print(m.charge); sink()
+    
+    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_charge_meta.png", sep = "")), width = 2800, height = 2400, res = 300)
+    
+    Charge.Per.Session <- data_control$charge.per.session
+    m.gen.reg <- metareg(m.gen, Charge.Per.Session)
+    bubble(m.gen.reg, studlab = F)
+    
+    dev.off()
+    
+    m.rms <- rma(yi = es,
+                 sei = se,
+                 data = data_control,
+                 method = "ML",
+                 mods = rms.value,
+                 test = "knha")
+    
+    sink(file.path(resultPathPost, param, "meta-regression", paste(param, "_rmsReg.txt", sep = ""), fsep = "\\")); print(m.rms); sink()
+    
+    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_rms_meta.png", sep = "")), width = 2800, height = 2400, res = 300)
+    
+    RMS.Value <- data_control$rms.value
+    m.gen.reg <- metareg(m.gen, RMS.Value)
+    bubble(m.gen.reg, studlab = F)
+    
+    dev.off()
+    
+    m.mratio <- rma(yi = es,
+                    sei = se,
+                    data = data_control,
+                    method = "REML",
+                    mods = male.ratio,
+                    test = "knha")
+    
+    sink(file.path(resultPathPost, param, "meta-regression", paste(param, "_mratioReg.txt", sep = ""), fsep = "\\")); print(m.mratio); sink()
+    
+    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_mratio_meta.png", sep = "")), width = 2800, height = 2400, res = 300)
+    
+    Male.Ratio <- data_control$male.ratio
+    m.gen.reg <- metareg(m.gen, Male.Ratio)
+    bubble(m.gen.reg, studlab = F)
+    
+    dev.off()
+    
+    m.frequency <- rma(yi = es,
+                       sei = se,
+                       data = data_control,
+                       method = "REML",
+                       mods = frequency,
+                       test = "knha")
+    
+    sink(file.path(resultPathPost, param, "meta-regression", paste(param, "_freqReg.txt", sep = ""), fsep = "\\")); print(m.frequency); sink()
+    
+    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_fre_meta.png", sep = "")), width = 2800, height = 2400, res = 300)
+    
+    Frequency <- data_control$frequency
+    m.gen.reg <- metareg(m.gen, Frequency)
+    bubble(m.gen.reg, studlab = F)
+    
+    dev.off()
+    
+    m.pulse <- rma(yi = es,
+                   sei = se,
+                   data = data_control,
+                   method = "REML",
+                   mods = pulse.width,
+                   test = "knha")
+    
+    sink(file.path(resultPathPost, param, "meta-regression", paste(param, "_pulseReg.txt", sep = ""), fsep = "\\")); print(m.pulse); sink()
+    
+    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_pulse_meta.png", sep = "")), width = 2800, height = 2400, res = 300)
+    
+    Pulse.Width <- data_control$pulse.width
+    m.gen.reg <- metareg(m.gen, Pulse.Width)
+    bubble(m.gen.reg, studlab = F)
+    
+    dev.off()
+    
+    m.age <- rma(yi = es,
+                 sei = se,
+                 data = data_control,
+                 method = "REML",
+                 mods = age.total,
+                 test = "knha")
+    
+    sink(file.path(resultPathPost, param, "meta-regression", paste(param, "_ageReg.txt", sep = ""), fsep = "\\")); print(m.age); sink()
+    
+    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_age_meta.png", sep = "")), width = 2800, height = 2400, res = 300)
+    
+    Age <- data_control$age.total
+    m.gen.reg <- metareg(m.gen, Age)
+    bubble(m.gen.reg, studlab = F)
+    
+    dev.off()
+    
+    minf <- multimodel.inference(TE = "es", 
+                                 seTE = "se",
+                                 data = data_control,
+                                 predictors = c("rms.value",
+                                                "charge.per.session",
+                                                "frequency",
+                                                "pulse.width",
+                                                "age.total"),
+                                 interaction = F)
+    
+    
+    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_MInference.png", sep = "")), width = 2800, height = 2400, res = 300)
+    
+    plot(minf)
+    
+    dev.off()
+    
+    sink(file.path(resultPathPost, param, "meta-regression", paste(param, "_modelSelection.txt", sep = ""), fsep = "\\")); print(minf); sink()
+  }
+  
+  # dur-pre Meta-analysis
+
+  dataDur <- data %>% filter(design == "control" &
+                    !is.na(mean.pre.active) & !is.na(mean.pre.sham) &
+                    !is.na(mean.dur.sham) & !is.na(mean.dur.active))
+  
+  if (nrow(dataDur) >= 3){
+    
+    # See if there is any study with no pre-dur data (just includes difference score data)
+    
+    if (param == "RMSSD"){
+      dataDurExcept <- data %>% filter(design == "control" & 
+                                         is.na(mean.pre.active) & is.na(mean.pre.sham) &
+                                         !is.na(mean.dur.difference.active) & !is.na(mean.dur.difference.sham))
+      durExcept <- nrow(dataDurExcept)
+    }
+    
+    if (exists("durExcept") && durExcept != 0){
+      for (ind in 1:durExcept){
+        
+        exTreatment <- escalc(measure = "SMCC",
+                              m1i = dataDurExcept$mean.dur.difference.active[ind],
+                              m2i = 0,
+                              sd1i = dataDurExcept$sd.dur.difference.active[ind],
+                              sd2i = 0,
+                              ni = dataDurExcept$n.active[ind],
+                              ri = corr)
+        exControl <- escalc(measure = "SMCC",
+                            m1i = dataDurExcept$mean.dur.difference.sham[ind],
+                            m2i = 0,
+                            sd1i = dataDurExcept$sd.dur.difference.sham[ind],
+                            sd2i = 0,
+                            ni = dataDurExcept$n.sham[ind],
+                            ri = corr)
+        dataDur$es[dataDur$Author == dataDurExcept$Author[ind]] <- exTreatment$yi - exControl$yi
+        dataDur$se[dataDur$Author == dataDurExcept$Author[ind]] <- exTreatment$vi + exControl$vi
+        
+      }
+    }
+    
+    treatment_ef <- escalc(measure = "SMCR",
+                           m1i = mean.dur.active,
+                           m2i = mean.pre.active,
+                           sd1i = sd.pre.active,
+                           ni = n.active,
+                           ri = ri,
+                           data = dataDur)
+    control_ef <-  escalc(measure = "SMCR",
+                          m1i = mean.dur.sham,
+                          m2i = mean.pre.sham,
+                          sd1i = sd.pre.sham,
+                          ni = n.sham,
+                          ri = ri,
+                          data = dataDur)
+    
+    dataDur %<>% mutate(es = treatment_ef$yi - control_ef$yi,
+                        se = treatment_ef$vi + control_ef$vi)
+    
+    dataDur$se <- dataDur$se ^ .5
+    
+    # Pooled effects
+    
+    m.gen <- metagen(TE = es,
+                     seTE = se,
+                     studlab = Author,
+                     data = dataDur,
+                     sm = "SMD",
+                     fixed = FALSE,
+                     random = TRUE,
+                     method.tau = "REML",
+                     hakn = TRUE,
+                     title = paste(param, "_tVNS"))
+    
+    sink(file.path(resultPathDur, param, paste(param, "_meta-analysis.txt", sep = ""), fsep = "\\")); print(m.gen); sink()
+    
+    # Export graphs
+    
+    png(file = file.path(resultPathDur, param, paste(param, "_forestplot.png", sep = "")), width = 2800, height = 2400, res = 300)
+    forest.meta(m.gen,
+                layout = "meta",
+                sortvar = TE,
+                print.tau2 = TRUE,
+                prediction = TRUE,
+                leftlabs = c("Study"),
+                leftcols = c("studlab"),
+                colgap.forest.left = "5cm"
+    )
+    dev.off()
+    
+    png(file = file.path(resultPathDur, param, paste(param, "_drapery.png", sep = "")), width = 3500, height = 3500, res = 300)
+    drapery(m.gen,
+            labels = FALSE,
+            study.results = TRUE,
+            type = "pval",
+            legend = TRUE)
+    dev.off()
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

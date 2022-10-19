@@ -1,0 +1,52 @@
+
+
+Multimodel Inference: Final Results
+--------------------------
+
+ - Number of fitted models: 32
+ - Full formula: ~ rms.value + charge.per.session + frequency + pulse.width + age.total
+ - Coefficient significance test: knha
+ - Interactions modeled: no
+ - Evaluation criterion: AICc 
+
+
+Best 5 Models
+--------------------------
+
+
+Global model call: metafor::rma(yi = TE, sei = seTE, mods = form, data = glm.data, 
+    method = method, test = test)
+---
+Model selection table 
+   (Int)  age.ttl chr.per.sss   pls.wdt rms.val df logLik AICc delta weight
+1      +                                         2 -3.802 13.1  0.00  0.626
+2      + -0.01457                                3 -3.332 16.1  2.99  0.140
+3      +             0.009035                    3 -3.749 16.9  3.82  0.093
+17     +                                 0.4829  3 -3.968 17.4  4.26  0.074
+9      +                      0.0002702          3 -4.076 17.6  4.48  0.067
+Models ranked by AICc(x) 
+
+
+Multimodel Inference Coefficients
+--------------------------
+
+
+                        Estimate   Std. Error    z value  Pr(>|z|)
+intrcpt             8.801133e-02 0.2774164469 0.31725348 0.7510513
+age.total          -2.331862e-03 0.0080420794 0.28995757 0.7718487
+charge.per.session  9.988492e-04 0.0051250590 0.19489517 0.8454750
+rms.value           3.482531e-02 0.3424094238 0.10170663 0.9189895
+pulse.width         1.709554e-05 0.0002800877 0.06103637 0.9513302
+frequency          -1.754559e-05 0.0002229016 0.07871448 0.9372597
+
+
+Predictor Importance
+--------------------------
+
+
+               model importance
+1          age.total 0.15685959
+2 charge.per.session 0.10702053
+3          rms.value 0.08691614
+4        pulse.width 0.08045882
+5          frequency 0.07648545

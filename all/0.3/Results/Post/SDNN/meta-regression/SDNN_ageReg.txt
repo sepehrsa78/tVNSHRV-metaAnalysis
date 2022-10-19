@@ -1,0 +1,24 @@
+
+Mixed-Effects Model (k = 7; tau^2 estimator: REML)
+
+tau^2 (estimated amount of residual heterogeneity):     0.0000 (SE = 0.0601)
+tau (square root of estimated tau^2 value):             0.0009
+I^2 (residual heterogeneity / unaccounted variability): 0.00%
+H^2 (unaccounted variability / sampling variability):   1.00
+R^2 (amount of heterogeneity accounted for):            80.04%
+
+Test for Residual Heterogeneity:
+QE(df = 5) = 6.0398, p-val = 0.3024
+
+Test of Moderators (coefficient 2):
+F(df1 = 1, df2 = 5) = 0.2630, p-val = 0.6299
+
+Model Results:
+
+         estimate      se     tval  df    pval    ci.lb   ci.ub 
+intrcpt    0.5085  0.5729   0.8877   5  0.4154  -0.9641  1.9812    
+mods      -0.0104  0.0203  -0.5128   5  0.6299  -0.0624  0.0417    
+
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
