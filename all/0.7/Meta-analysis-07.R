@@ -153,7 +153,7 @@ for (param in Params){
   
   # Export graphs
   
-  png(file = file.path(resultPathPost, param, paste(param, "_forestplot.png", sep = "")), width = 2800, height = 2400, res = 300)
+  png(file = file.path(resultPathPost, param, paste(param, "_forestplot.png", sep = "")), width = 3500, height = 2600, res = 300)
   forest.meta(m.gen, 
               layout = "meta",
               sortvar = TE,
@@ -161,7 +161,9 @@ for (param in Params){
               prediction = TRUE,
               leftlabs = c("Study"),
               leftcols = c("studlab"),
-              colgap.forest.left = "5cm"
+              colgap.forest.left = "7cm",
+              colgap.forest.right = "2cm",
+              xlim = c(-3, 3)
   )
   dev.off()
   
@@ -181,7 +183,7 @@ for (param in Params){
   
   sink(file.path(resultPathPost, param, "subgroup", paste(param, "_Int-meta-analysis.txt", sep = ""), fsep = "\\")); print(m.gen_int); sink()
   
-  png(file = file.path(resultPathPost, param, "subgroup", paste(param,"_Int_forestplot.png", sep = "")), width = 2800, height = 2400, res = 300)
+  png(file = file.path(resultPathPost, param, "subgroup", paste(param,"_Int_forestplot.png", sep = "")), width = 3500, height = 2600, res = 300)
   forest.meta(m.gen_int, 
               layout = "meta",
               sortvar = TE,
@@ -189,7 +191,9 @@ for (param in Params){
               prediction = TRUE,
               leftlabs = c("Study"),
               leftcols = c("studlab"),
-              colgap.forest.left = "5cm"
+              colgap.forest.left = "7cm",
+              colgap.forest.right = "2cm",
+              xlim = c(-3, 3)
   )
   dev.off()
   
@@ -201,7 +205,7 @@ for (param in Params){
   
   sink(file.path(resultPathPost, param, "subgroup", paste(param, "_ShamStra-meta-analysis.txt", sep = ""), fsep = "\\")); print(m.gen_sham_stra); sink()
   
-  png(file = file.path(resultPathPost, param, "subgroup", paste(param, "_ShamStrategy_forestplot.png", sep = "")), width = 2800, height = 2400, res = 300)
+  png(file = file.path(resultPathPost, param, "subgroup", paste(param, "_ShamStrategy_forestplot.png", sep = "")), width = 3500, height = 2600, res = 300)
   forest.meta(m.gen_sham_stra, 
               layout = "meta",
               sortvar = TE,
@@ -209,7 +213,9 @@ for (param in Params){
               prediction = TRUE,
               leftlabs = c("Study"),
               leftcols = c("studlab"),
-              colgap.forest.left = "5cm"
+              colgap.forest.left = "7cm",
+              colgap.forest.right = "2cm",
+              xlim = c(-3, 3)
   )
   dev.off()
   
@@ -221,7 +227,7 @@ for (param in Params){
   
   sink(file.path(resultPathPost, param, "subgroup", paste(param, "_fre-meta-analysis.txt", sep = ""), fsep = "\\")); print(m.gen_sham_fre); sink()
   
-  png(file = file.path(resultPathPost, param, "subgroup", paste(param, "_fre_forestplot.png", sep = "")), width = 2800, height = 2400, res = 300)
+  png(file = file.path(resultPathPost, param, "subgroup", paste(param, "_fre_forestplot.png", sep = "")), width = 3500, height = 2600, res = 300)
   forest.meta(m.gen_sham_fre, 
               layout = "meta",
               sortvar = TE,
@@ -229,7 +235,9 @@ for (param in Params){
               prediction = TRUE,
               leftlabs = c("Study"),
               leftcols = c("studlab"),
-              colgap.forest.left = "5cm"
+              colgap.forest.left = "7cm",
+              colgap.forest.right = "2cm",
+              xlim = c(-3, 3)
   )
   dev.off()
   
@@ -241,7 +249,7 @@ for (param in Params){
   
   sink(file.path(resultPathPost, param, "subgroup", paste(param, "_pulse-meta-analysis.txt", sep = ""), fsep = "\\")); print(m.gen_pulse); sink()
   
-  png(file = file.path(resultPathPost, param, "subgroup", paste(param, "_pulse_forestplot.png", sep = "")), width = 2800, height = 2400, res = 300)
+  png(file = file.path(resultPathPost, param, "subgroup", paste(param, "_pulse_forestplot.png", sep = "")), width = 3500, height = 2600, res = 300)
   forest.meta(m.gen_pulse, 
               layout = "meta",
               sortvar = TE,
@@ -249,7 +257,9 @@ for (param in Params){
               prediction = TRUE,
               leftlabs = c("Study"),
               leftcols = c("studlab"),
-              colgap.forest.left = "5cm"
+              colgap.forest.left = "7cm",
+              colgap.forest.right = "2cm",
+              xlim = c(-3, 3)
   )
   dev.off()
   
@@ -261,7 +271,7 @@ for (param in Params){
   
   sink(file.path(resultPathPost, param, "subgroup", paste(param, "_StimType-meta-analysis.txt", sep = ""), fsep = "\\")); print(m.gen_stim_type); sink()
   
-  png(file = file.path(resultPathPost, param, "subgroup", paste(param, "_stim_type_forestplot.png", sep = "")), width = 2800, height = 2400, res = 300)
+  png(file = file.path(resultPathPost, param, "subgroup", paste(param, "_stim_type_forestplot.png", sep = "")), width = 3500, height = 2600, res = 300)
   forest.meta(m.gen_stim_type, 
               layout = "meta",
               sortvar = TE,
@@ -269,15 +279,18 @@ for (param in Params){
               prediction = TRUE,
               leftlabs = c("Study"),
               leftcols = c("studlab"),
-              colgap.forest.left = "5cm"
-  )
+              colgap.forest.left = "7cm",
+              colgap.forest.right = "2cm",
+              xlim = c(-3, 3)
+              )
+
   dev.off()
   
   # Publication_Bias --------------------------------------------------------
   
   # Produce funnel plot
   
-  png(file = file.path(resultPathPost, param, paste(param, "_funnel.png", sep = "")), width = 2800, height = 2400, res = 300)
+  png(file = file.path(resultPathPost, param, paste(param, "_funnel.png", sep = "")), width = 3500, height = 2600, res = 300)
   funnel.meta(m.gen,
               studlab = T)
   
@@ -289,7 +302,7 @@ for (param in Params){
   # contour-enhanced funnel plots -------------------------------------------
   #Such plots can help distinguish publication bias from other forms of asymmetry
   
-  png(file = file.path(resultPathPost, param, paste(param, "_funnel_enhanced.png", sep = "")), width = 2800, height = 2400, res = 300)
+  png(file = file.path(resultPathPost, param, paste(param, "_funnel_enhanced.png", sep = "")), width = 3500, height = 2600, res = 300)
   
   # Define fill colors for contour
   
@@ -331,20 +344,20 @@ for (param in Params){
   #and the leave-one-out meta-analysis results, sorted by effect size and 
   #I^2value. We can open each of these plots individually using the plot function
   
-  png(file = file.path(resultPathPost, param, "influence", paste(param, "_baujat.png", sep = "")), width = 2800, height = 2400, res = 300)
+  png(file = file.path(resultPathPost, param, "influence", paste(param, "_baujat.png", sep = "")), width = 3500, height = 2600, res = 300)
   plot(m.gen.inf, "baujat")
   dev.off()
   
-  png(file = file.path(resultPathPost, param, "influence", paste(param, "_influence.png", sep = "")), width = 2800, height = 2400, res = 300)
+  png(file = file.path(resultPathPost, param, "influence", paste(param, "_influence.png", sep = "")), width = 3500, height = 2600, res = 300)
   plot(m.gen.inf, "influence")
   dev.off()
   
   #Leave-One-Out Meta-Analysis Results
-  png(file = file.path(resultPathPost, param, "influence", paste(param, "_es_leave_one_out.png", sep = "")), width = 2800, height = 2400, res = 300)
+  png(file = file.path(resultPathPost, param, "influence", paste(param, "_es_leave_one_out.png", sep = "")), width = 3500, height = 2600, res = 300)
   plot(m.gen.inf, "es")
   dev.off()
   
-  png(file = file.path(resultPathPost, param, "influence", paste(param, "_i2_leave_one_out.png", sep = "")), width = 2800, height = 2400, res = 300)
+  png(file = file.path(resultPathPost, param, "influence", paste(param, "_i2_leave_one_out.png", sep = "")), width = 3500, height = 2600, res = 300)
   plot(m.gen.inf, "i2")
   dev.off()
   
@@ -356,7 +369,7 @@ for (param in Params){
     data_control$rms.value <- data_control$rms.value * 1000
     data_control$charge.per.session <- data_control$charge.per.session * 1000
     
-    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_Multi-Collinearity.png", sep = "")), width = 2800, height = 2400, res = 300)
+    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_Multi-Collinearity.png", sep = "")), width = 3500, height = 2600, res = 300)
     
     data_control[,c("male.ratio",
                     "age.total",
@@ -378,7 +391,7 @@ for (param in Params){
     
     sink(file.path(resultPathPost, param, "meta-regression", paste(param, "_chargeReg.txt", sep = ""), fsep = "\\")); print(m.charge); sink()
     
-    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_charge_meta.png", sep = "")), width = 2800, height = 2400, res = 300)
+    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_charge_meta.png", sep = "")), width = 3500, height = 2600, res = 300)
     
     Charge.Per.Session <- data_control$charge.per.session
     m.gen.reg <- metareg(m.gen, Charge.Per.Session)
@@ -395,7 +408,7 @@ for (param in Params){
     
     sink(file.path(resultPathPost, param, "meta-regression", paste(param, "_rmsReg.txt", sep = ""), fsep = "\\")); print(m.rms); sink()
     
-    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_rms_meta.png", sep = "")), width = 2800, height = 2400, res = 300)
+    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_rms_meta.png", sep = "")), width = 3500, height = 2600, res = 300)
     
     RMS.Value <- data_control$rms.value
     m.gen.reg <- metareg(m.gen, RMS.Value)
@@ -412,7 +425,7 @@ for (param in Params){
     
     sink(file.path(resultPathPost, param, "meta-regression", paste(param, "_mratioReg.txt", sep = ""), fsep = "\\")); print(m.mratio); sink()
     
-    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_mratio_meta.png", sep = "")), width = 2800, height = 2400, res = 300)
+    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_mratio_meta.png", sep = "")), width = 3500, height = 2600, res = 300)
     
     Male.Ratio <- data_control$male.ratio
     m.gen.reg <- metareg(m.gen, Male.Ratio)
@@ -429,7 +442,7 @@ for (param in Params){
     
     sink(file.path(resultPathPost, param, "meta-regression", paste(param, "_freqReg.txt", sep = ""), fsep = "\\")); print(m.frequency); sink()
     
-    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_fre_meta.png", sep = "")), width = 2800, height = 2400, res = 300)
+    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_fre_meta.png", sep = "")), width = 3500, height = 2600, res = 300)
     
     Frequency <- data_control$frequency
     m.gen.reg <- metareg(m.gen, Frequency)
@@ -446,7 +459,7 @@ for (param in Params){
     
     sink(file.path(resultPathPost, param, "meta-regression", paste(param, "_pulseReg.txt", sep = ""), fsep = "\\")); print(m.pulse); sink()
     
-    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_pulse_meta.png", sep = "")), width = 2800, height = 2400, res = 300)
+    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_pulse_meta.png", sep = "")), width = 3500, height = 2600, res = 300)
     
     Pulse.Width <- data_control$pulse.width
     m.gen.reg <- metareg(m.gen, Pulse.Width)
@@ -463,7 +476,7 @@ for (param in Params){
     
     sink(file.path(resultPathPost, param, "meta-regression", paste(param, "_ageReg.txt", sep = ""), fsep = "\\")); print(m.age); sink()
     
-    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_age_meta.png", sep = "")), width = 2800, height = 2400, res = 300)
+    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_age_meta.png", sep = "")), width = 3500, height = 2600, res = 300)
     
     Age <- data_control$age.total
     m.gen.reg <- metareg(m.gen, Age)
@@ -482,7 +495,7 @@ for (param in Params){
                                  interaction = F)
     
     
-    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_MInference.png", sep = "")), width = 2800, height = 2400, res = 300)
+    png(file = file.path(resultPathPost, param, "meta-regression", paste(param, "_MInference.png", sep = "")), width = 3500, height = 2600, res = 300)
     
     plot(minf)
     
@@ -568,7 +581,7 @@ for (param in Params){
     
     # Export graphs
     
-    png(file = file.path(resultPathDur, param, paste(param, "_forestplot.png", sep = "")), width = 2800, height = 2400, res = 300)
+    png(file = file.path(resultPathDur, param, paste(param, "_forestplot.png", sep = "")), width = 3500, height = 2600, res = 300)
     forest.meta(m.gen,
                 layout = "meta",
                 sortvar = TE,
@@ -576,7 +589,9 @@ for (param in Params){
                 prediction = TRUE,
                 leftlabs = c("Study"),
                 leftcols = c("studlab"),
-                colgap.forest.left = "5cm"
+                colgap.forest.left = "7cm",
+                colgap.forest.right = "2cm",
+                xlim = c(-3, 3)
     )
     dev.off()
     
@@ -589,19 +604,3 @@ for (param in Params){
     dev.off()
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

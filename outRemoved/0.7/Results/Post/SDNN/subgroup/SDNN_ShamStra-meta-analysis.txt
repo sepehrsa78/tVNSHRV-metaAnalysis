@@ -1,31 +1,31 @@
 Review:     SDNN _tVNS
 
-Number of studies combined: k = 5
+Number of studies combined: k = 7
 
                         SMD            95%-CI    t p-value
-Random effects model 0.3372 [-0.2705; 0.9450] 1.54  0.1982
+Random effects model 0.2124 [-0.0641; 0.4889] 1.88  0.1093
 
 Quantifying heterogeneity:
- tau^2 = 0.1373 [0.0055; 2.3775]; tau = 0.3706 [0.0742; 1.5419]
- I^2 = 66.0% [11.4%; 87.0%]; H = 1.72 [1.06; 2.77]
+ tau^2 < 0.0001 [0.0000; 0.9459]; tau = 0.0005 [0.0000; 0.9726]
+ I^2 = 52.2% [0.0%; 79.6%]; H = 1.45 [1.00; 2.22]
 
 Quantifying residual heterogeneity:
- tau^2 = 0.1666 [0.0034; 4.1280]; tau = 0.4082 [0.0586; 2.0317]
- I^2 = 69.1% [10.7%; 89.3%]; H = 1.80 [1.06; 3.06]
+ tau^2 = 0.0103 [0.0000; 1.0162]; tau = 0.1017 [0.0000; 1.0081]
+ I^2 = 50.3% [0.0%; 80.3%]; H = 1.42 [1.00; 2.25]
 
 Test of heterogeneity:
      Q d.f. p-value
- 11.78    4  0.0191
+ 12.55    6  0.0508
 
 Results for subgroups (random effects model):
                          k    SMD            95%-CI  tau^2    tau    Q   I^2
-sham.strategy = concha   2 0.1046 [-1.1276; 1.3369] 0.1666 0.4082 0.45  0.0%
-sham.strategy = ear      3 0.5218 [-1.0373; 2.0809] 0.1666 0.4082 9.25 78.4%
+sham.strategy = concha   4 0.1272 [-0.0310; 0.2854] 0.0103 0.1017 0.82  0.0%
+sham.strategy = ear      3 0.4110 [-0.9182; 1.7402] 0.0103 0.1017 9.25 78.4%
 
 Test for subgroup differences (random effects model):
-                  Q d.f. p-value
-Between groups 1.24    1  0.2661
-Within groups  9.70    3  0.0213
+                   Q d.f. p-value
+Between groups  0.82    1  0.3645
+Within groups  10.07    5  0.0734
 
 Details on meta-analytical method:
 - Inverse variance method

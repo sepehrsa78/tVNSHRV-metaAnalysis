@@ -1,17 +1,17 @@
 Review:     LFHF _tVNS
 
-Number of studies combined: k = 10
+Number of studies combined: k = 12
 
                          SMD            95%-CI     t p-value
-Random effects model -0.1445 [-0.5602; 0.2711] -0.79  0.4517
+Random effects model -0.0801 [-0.4148; 0.2546] -0.53  0.6089
 
 Quantifying heterogeneity:
- tau^2 = 0.2360 [0.0725; 1.1209]; tau = 0.4858 [0.2692; 1.0587]
- I^2 = 74.2% [51.7%; 86.2%]; H = 1.97 [1.44; 2.69]
+ tau^2 = 0.1777 [0.0591; 0.8135]; tau = 0.4216 [0.2432; 0.9020]
+ I^2 = 70.2% [46.2%; 83.5%]; H = 1.83 [1.36; 2.46]
 
 Test of heterogeneity:
-     Q d.f.  p-value
- 34.88    9 < 0.0001
+     Q d.f. p-value
+ 36.96   11  0.0001
 
 Details on meta-analytical method:
 - Inverse variance method

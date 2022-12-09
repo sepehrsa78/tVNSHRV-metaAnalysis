@@ -1,33 +1,33 @@
 Review:     LFHF _tVNS
 
-Number of studies combined: k = 10
+Number of studies combined: k = 12
 
                          SMD            95%-CI     t p-value
-Random effects model -0.1445 [-0.5602; 0.2711] -0.79  0.4517
+Random effects model -0.0801 [-0.4148; 0.2546] -0.53  0.6089
 
 Quantifying heterogeneity:
- tau^2 = 0.2360 [0.0725; 1.1209]; tau = 0.4858 [0.2692; 1.0587]
- I^2 = 74.2% [51.7%; 86.2%]; H = 1.97 [1.44; 2.69]
+ tau^2 = 0.1777 [0.0591; 0.8135]; tau = 0.4216 [0.2432; 0.9020]
+ I^2 = 70.2% [46.2%; 83.5%]; H = 1.83 [1.36; 2.46]
 
 Quantifying residual heterogeneity:
- tau^2 = 0 [0.0000; 0.2178]; tau = 0 [0.0000; 0.4667]
- I^2 = 0.0% [0.0%; 70.8%]; H = 1.00 [1.00; 1.85]
+ tau^2 = 0.0078 [0.0000; 0.2351]; tau = 0.0883 [0.0000; 0.4849]
+ I^2 = 18.8% [0.0%; 60.5%]; H = 1.11 [1.00; 1.59]
 
 Test of heterogeneity:
-     Q d.f.  p-value
- 34.88    9 < 0.0001
+     Q d.f. p-value
+ 36.96   11  0.0001
 
 Results for subgroups (random effects model):
-                    k     SMD             95%-CI tau^2 tau    Q  I^2
-pulse.width = 200   4  0.2967 [-0.0967;  0.6900]     0   0 2.97 0.0%
-pulse.width = 250   4 -0.1143 [-0.4238;  0.1951]     0   0 1.93 0.0%
-pulse.width = N/A   1 -1.6543 [-2.3717; -0.9368]     0   0 0.00   --
-pulse.width = 500   1 -0.5034 [-1.0445;  0.0377]     0   0 0.00   --
+                    k     SMD             95%-CI  tau^2    tau    Q   I^2
+pulse.width = 200   4  0.2901 [-0.1063;  0.6864] 0.0078 0.0883 2.97  0.0%
+pulse.width = 250   4 -0.1177 [-0.4367;  0.2012] 0.0078 0.0883 1.93  0.0%
+pulse.width = N/A   1 -1.6543 [-2.3923; -0.9162] 0.0078 0.0883 0.00    --
+pulse.width = 500   3  0.0272 [-0.7874;  0.8418] 0.0078 0.0883 4.94 59.6%
 
 Test for subgroup differences (random effects model):
                    Q d.f.  p-value
-Between groups 30.19    3 < 0.0001
-Within groups   4.90    6   0.5561
+Between groups 26.05    3 < 0.0001
+Within groups   9.85    8   0.2757
 
 Details on meta-analytical method:
 - Inverse variance method

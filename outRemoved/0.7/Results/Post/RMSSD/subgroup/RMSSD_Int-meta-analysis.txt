@@ -1,32 +1,32 @@
 Review:     RMSSD _tVNS
 
-Number of studies combined: k = 9
+Number of studies combined: k = 11
 
                         SMD            95%-CI    t p-value
-Random effects model 0.0058 [-0.1043; 0.1158] 0.12  0.9066
+Random effects model 0.0053 [-0.0784; 0.0890] 0.14  0.8910
 
 Quantifying heterogeneity:
- tau^2 = 0 [0.0000; 0.0403]; tau = 0 [0.0000; 0.2007]
- I^2 = 0.0% [0.0%; 64.8%]; H = 1.00 [1.00; 1.69]
+ tau^2 = 0 [0.0000; 0.0062]; tau = 0 [0.0000; 0.0784]
+ I^2 = 0.0% [0.0%; 60.2%]; H = 1.00 [1.00; 1.59]
 
 Quantifying residual heterogeneity:
- tau^2 = 0 [0.0000; 0.1299]; tau = 0 [0.0000; 0.3605]
- I^2 = 0.0% [0.0%; 70.8%]; H = 1.00 [1.00; 1.85]
+ tau^2 = 0 [0.0000; 0.0453]; tau = 0 [0.0000; 0.2129]
+ I^2 = 0.0% [0.0%; 64.8%]; H = 1.00 [1.00; 1.69]
 
 Test of heterogeneity:
     Q d.f. p-value
- 3.34    8  0.9116
+ 3.54   10  0.9657
 
 Results for subgroups (random effects model):
                           k     SMD            95%-CI tau^2 tau    Q  I^2
-intervention = L-concha   4  0.0119 [-0.3129; 0.3367]     0   0 2.25 0.0%
+intervention = L-concha   6  0.0080 [-0.1443; 0.1604]     0   0 2.46 0.0%
 intervention = R-concha   3  0.0153 [-0.0365; 0.0672]     0   0 0.02 0.0%
 intervention = L-tragus   2 -0.0224 [-2.0599; 2.0151]     0   0 1.03 2.4%
 
 Test for subgroup differences (random effects model):
                   Q d.f. p-value
-Between groups 0.06    2  0.9723
-Within groups  3.29    6  0.7710
+Between groups 0.07    2  0.9661
+Within groups  3.50    8  0.8991
 
 Details on meta-analytical method:
 - Inverse variance method
