@@ -8,16 +8,16 @@ H^2 (unaccounted variability / sampling variability):   1.00
 R^2 (amount of heterogeneity accounted for):            0.00%
 
 Test for Residual Heterogeneity:
-QE(df = 11) = 3.4910, p-val = 0.9825
+QE(df = 11) = 3.5088, p-val = 0.9822
 
 Test of Moderators (coefficient 2):
-F(df1 = 1, df2 = 11) = 0.4535, p-val = 0.5146
+F(df1 = 1, df2 = 11) = 0.5447, p-val = 0.4759
 
 Model Results:
 
          estimate      se     tval  df    pval    ci.lb   ci.ub 
-intrcpt   -0.0234  0.0597  -0.3917  11  0.7027  -0.1548  0.1080    
-mods       0.2172  0.3225   0.6735  11  0.5146  -0.4926  0.9270    
+intrcpt   -0.0217  0.0598  -0.3626  11  0.7237  -0.1534  0.1100    
+mods       0.2387  0.3234   0.7381  11  0.4759  -0.4730  0.9504    
 
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1

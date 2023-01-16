@@ -24,7 +24,7 @@ Params <- c("LF", "HF", "LFHF", "RMSSD", "SDNN", "PNN50", "BRS")
 
 for (param in Params){
   if (param != "RMSSD"){
-    data <- read_excel(file.path(dataPath, "HRV_Params.xlsx"), 
+    data <- read_excel(file.path(dataPath, "HRV_Params.xlsx", fsep = "\\"), 
                        col_types = c("text", "text", "skip", 
                                      "skip", "numeric", "text", "text", 
                                      "numeric", "skip", "text", "skip", 

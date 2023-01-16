@@ -18,12 +18,12 @@ Global model call: metafor::rma(yi = TE, sei = seTE, mods = form, data = glm.dat
     method = method, test = test)
 ---
 Model selection table 
-   (Int) chr.per.sss pls.wdt rms.val df logLik  AICc delta weight
-19     +    17.46000           -1218  4 -0.466 -31.1     0    0.2
-7      +    -0.01501                  4 -0.466 -31.1     0    0.2
-15     +    -0.01501       +          4 -0.466 -31.1     0    0.2
-23     +    -0.01501                  4 -0.466 -31.1     0    0.2
-31     +    -0.01501       +          4 -0.466 -31.1     0    0.2
+   (Int) pls.wdt rms.val df logLik  AICc delta weight
+6      +                  4 -0.319 -31.4     0    0.2
+14     +       +          4 -0.319 -31.4     0    0.2
+22     +                  4 -0.319 -31.4     0    0.2
+30     +       +          4 -0.319 -31.4     0    0.2
+21     +          -1.254  4 -0.319 -31.4     0    0.2
 Models ranked by AICc(x) 
 
 
@@ -32,12 +32,12 @@ Multimodel Inference Coefficients
 
 
                        Estimate   Std. Error   z value  Pr(>|z|)
-intrcpt             -9.15800795  15.10944397 0.6061115 0.5444407
-charge.per.session   0.70479424   3.42262291 0.2059223 0.8368516
-rms.value          -48.77818460 238.88743782 0.2041890 0.8382058
-frequency            0.31751864   0.40007041 0.7936569 0.4273952
-age.total            0.09886235   0.09923511 0.9962436 0.3191318
-pulse.width         -0.01587593   0.03243959 0.4893999 0.6245586
+intrcpt            -11.45425644  17.66888074 0.6482729 0.5168085
+age.total            0.11640860   0.11616404 1.0021053 0.3162927
+frequency            0.37119536   0.46797915 0.7931878 0.4276684
+rms.value          -57.21654137 280.05094430 0.2043076 0.8381131
+charge.per.session   0.82642776   4.01236678 0.2059701 0.8368142
+pulse.width         -0.01855977   0.03794058 0.4891799 0.6247143
 
 
 Predictor Importance
