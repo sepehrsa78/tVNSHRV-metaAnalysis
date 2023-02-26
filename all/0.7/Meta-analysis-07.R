@@ -11,6 +11,17 @@ library(numDeriv)
 library(knitr)
 library(PerformanceAnalytics)
 library(here)
+library(ggplot2)
+library(GGally)
+library(hrbrthemes)
+library(viridis)
+library(RColorBrewer)
+library(ggridges)
+library(circlepackeR) 
+library(data.tree)
+library(plotly)
+library(htmlwidgets)
+
 
 # loading data
 
@@ -21,28 +32,30 @@ dataPath <- paste(here, "all", "Data", sep = "\\")
 resultPathPost <- paste(here, "all", str_c(corr), "Results\\Post", sep = "\\")
 resultPathDur <- paste(here, "all", str_c(corr), "Results\\Dur", sep = "\\")
 Params <- c("LF", "HF", "LFHF", "RMSSD", "SDNN", "PNN50", "BRS")
+wholeData <- data.frame()
 
 for (param in Params){
   if (param != "RMSSD"){
-    data <- read_excel(file.path(dataPath, "HRV_Params.xlsx", fsep = "\\"), 
-                       col_types = c("text", "text", "skip", 
-                                     "skip", "numeric", "text", "text", 
-                                     "numeric", "skip", "text", "skip", 
-                                     "skip", "text", "text", "text", "text", "text", 
-                                     "numeric", "text", "text", "text", "text", 
-                                     "text", "numeric", "numeric", "text"), sheet = param)
+    data <- read_excel(file.path(dataPath, "HRV_Params.xlsx", fsep = "\\"),
+                       col_types = c("text", "text", "numeric", 
+                                     "text", "numeric", "text", "text", 
+                                     "numeric", "text", "numeric", "text", 
+                                     "text", "text", "text", "text", "text", 
+                                     "numeric", "numeric", "text", "text", 
+                                     "text", "numeric", "numeric", "numeric", 
+                                     "numeric", "text"), sheet = param)
   } else{
     data <- read_excel(file.path(dataPath, "HRV_Params.xlsx"), 
-                       col_types = c("text", "text", "skip", 
-                                     "skip", "numeric", "text", "text", 
-                                     "numeric", "skip", "text", "skip", 
-                                     "skip", "text", "text", "text", "text", "text", 
-                                     "numeric", "text", "text", "text", "text", 
-                                     "text", "numeric", "numeric", "text", "numeric",
-                                     "numeric", "numeric", "numeric"), sheet = param)
+                       col_types = c("text", "text", "numeric", 
+                                     "text", "numeric", "text", "text", 
+                                     "numeric", "text", "numeric", "text", 
+                                     "text", "text", "text", "text", "text", 
+                                     "numeric", "numeric", "text", "text", 
+                                     "text", "numeric", "numeric", "numeric", 
+                                     "numeric", "text", "numeric", "numeric", "numeric", "numeric"), sheet = param)
   }
   
-  for (folder in c("", "influence", "meta-regression", "subgroup")){
+  for (folder in c("", "influence", "meta-regression", "subgroup", "parellel")){
     if (file.exists(file.path(resultPathPost, param, folder, fsep = "\\"))){
       next
     } else{
@@ -56,26 +69,26 @@ for (param in Params){
   }
   
   data %<>% 
-    mutate(mean.difference.active = as.numeric(unglue_vec(data$difference.active, c("{x} ± {y}", "{x} ±{y}"), var = "x")),
-           sd.difference.active = as.numeric(unglue_vec(data$difference.active, c("{x} ± {y}", "{x} ±{y}"), var = "y")),
-           mean.difference.sham = as.numeric(unglue_vec(data$difference.sham, c("{x} ± {y}", "{x} ±{y}"), var = "x")),
-           sd.difference.sham = as.numeric(unglue_vec(data$difference.sham, c("{x} ± {y}", "{x} ±{y}"), var = "y")),
-           mean.pre.active = as.numeric(unglue_vec(data$pre.active, c("{x} ± {y}", "{x} ±{y}"), var = "x")),
-           sd.pre.active = as.numeric(unglue_vec(data$pre.active, c("{x} ± {y}", "{x} ±{y}"), var = "y")),
-           mean.dur.active = as.numeric(unglue_vec(data$dur.active, c("{x} ± {y}", "{x} ±{y}"), var = "x")),
-           sd.dur.active = as.numeric(unglue_vec(data$dur.active, c("{x} ± {y}", "{x} ±{y}"), var = "y")),
-           mean.post.active = as.numeric(unglue_vec(data$post.active, c("{x} ± {y}", "{x} ±{y}"), var = "x")),
-           sd.post.active = as.numeric(unglue_vec(data$post.active, c("{x} ± {y}", "{x} ±{y}"), var = "y")),
-           mean.pre.sham = as.numeric(unglue_vec(data$pre.sham, c("{x} ± {y}", "{x} ±{y}"), var = "x")),
-           sd.pre.sham = as.numeric(unglue_vec(data$pre.sham, c("{x} ± {y}", "{x} ±{y}"), var = "y")),
-           mean.dur.sham = as.numeric(unglue_vec(data$pre.sham, c("{x} ± {y}", "{x} ±{y}"), var = "x")),
-           sd.dur.sham = as.numeric(unglue_vec(data$pre.sham, c("{x} ± {y}", "{x} ±{y}"), var = "y")),
-           mean.post.sham = as.numeric(unglue_vec(data$post.sham, c("{x} ± {y}", "{x} ±{y}"), var = "x")),
-           sd.post.sham = as.numeric(unglue_vec(data$post.sham, c("{x} ± {y}", "{x} ±{y}"), var = "y")))
+    mutate(mean.difference.active = as.numeric(unglue_vec(data$difference.active, c("{x} Â± {y}", "{x} Â±{y}"), var = "x")),
+           sd.difference.active = as.numeric(unglue_vec(data$difference.active, c("{x} Â± {y}", "{x} Â±{y}"), var = "y")),
+           mean.difference.sham = as.numeric(unglue_vec(data$difference.sham, c("{x} Â± {y}", "{x} Â±{y}"), var = "x")),
+           sd.difference.sham = as.numeric(unglue_vec(data$difference.sham, c("{x} Â± {y}", "{x} Â±{y}"), var = "y")),
+           mean.pre.active = as.numeric(unglue_vec(data$pre.active, c("{x} Â± {y}", "{x} Â±{y}"), var = "x")),
+           sd.pre.active = as.numeric(unglue_vec(data$pre.active, c("{x} Â± {y}", "{x} Â±{y}"), var = "y")),
+           mean.dur.active = as.numeric(unglue_vec(data$dur.active, c("{x} Â± {y}", "{x} Â±{y}"), var = "x")),
+           sd.dur.active = as.numeric(unglue_vec(data$dur.active, c("{x} Â± {y}", "{x} Â±{y}"), var = "y")),
+           mean.post.active = as.numeric(unglue_vec(data$post.active, c("{x} Â± {y}", "{x} Â±{y}"), var = "x")),
+           sd.post.active = as.numeric(unglue_vec(data$post.active, c("{x} Â± {y}", "{x} Â±{y}"), var = "y")),
+           mean.pre.sham = as.numeric(unglue_vec(data$pre.sham, c("{x} Â± {y}", "{x} Â±{y}"), var = "x")),
+           sd.pre.sham = as.numeric(unglue_vec(data$pre.sham, c("{x} Â± {y}", "{x} Â±{y}"), var = "y")),
+           mean.dur.sham = as.numeric(unglue_vec(data$pre.sham, c("{x} Â± {y}", "{x} Â±{y}"), var = "x")),
+           sd.dur.sham = as.numeric(unglue_vec(data$pre.sham, c("{x} Â± {y}", "{x} Â±{y}"), var = "y")),
+           mean.post.sham = as.numeric(unglue_vec(data$post.sham, c("{x} Â± {y}", "{x} Â±{y}"), var = "x")),
+           sd.post.sham = as.numeric(unglue_vec(data$post.sham, c("{x} Â± {y}", "{x} Â±{y}"), var = "y")))
   
   data %<>% select(-pre.active, -dur.active, -post.active, -pre.sham, -dur.sham, -post.sham)
   data$n.sham <- as.numeric(data$n.sham)
-  data$age.total <-  as.numeric(unglue_vec(data$age.total, c("{x} ± {y}", "{x}"), var = "x"))
+  data$age.total <-  as.numeric(unglue_vec(data$age.total, c("{x} Â± {y}", "{x}"), var = "x"))
   data <- data %>% mutate(ri = rep(corr, length(data$Author)))
   
   data_control <- data %>% filter(design == "control" &
@@ -84,7 +97,7 @@ for (param in Params){
   
   
   dataExcept <- data %>% filter(is.na(mean.pre.active) & is.na(mean.pre.sham) &
-                                          !is.na(mean.difference.sham) & !is.na(mean.difference.active))
+                                  !is.na(mean.difference.sham) & !is.na(mean.difference.active))
   exceptNum <- nrow(dataExcept)
   
   data_control <- bind_rows(data_control, dataExcept)
@@ -136,6 +149,56 @@ for (param in Params){
   
   data_control$se <- data_control$se ^ .5
   
+  data_parellel <- data_control %>% select(Author, n.active, n.sham, male.ratio, age.total, frequency, 
+                                           pulse.width, n.sham, rms.value, 
+                                           charge.per.session, es, se, stim.type, 
+                                           intervention, sham.strategy)
+  data_parellel$index <- rep(param, nrow(data_parellel))
+  
+  copBplot <- ggparcoord(data_parellel,
+             columns = c(8:10), groupColumn = 13,
+             scale="std",
+             missing = "exclude",
+             showPoints = TRUE, 
+             title ="Stimulation Parameters' and the Effect Size Distribution",
+             alphaLines = .3,
+             boxplot = TRUE,
+  ) + scale_color_brewer(palette = "Set1") +
+    theme_minimal() +
+    theme(
+      plot.title = element_text(size=13)
+    ) + 
+    xlab("")
+  
+  copplot <- ggparcoord(data_parellel,
+                        columns = c(6:11), groupColumn = 13,
+                        scale="std",
+                        missing = "exclude",
+                        showPoints = TRUE, 
+                        title ="Stimulation Parameters' and the Effect Size Distribution",
+                        alphaLines = .3,
+                        boxplot = FALSE,
+  ) + scale_color_brewer(palette = "Set1") +
+    theme_minimal() +
+    theme(
+      plot.title = element_text(size=13)
+    ) + 
+    xlab("")
+  
+  write.csv(data_parellel, file.path(resultPathPost, param, "parellel", paste(param, "_coData.csv", sep = "")))
+  png(file = file.path(resultPathPost, param, "parellel", paste(param, "_copBplot.png", sep = "")), width = 3500, height = 2600, res = 300)
+  
+  print(copBplot)
+  
+  dev.off()
+  png(file = file.path(resultPathPost, param, "parellel", paste(param, "_copplot.png", sep = "")), width = 3500, height = 2600, res = 300)
+  
+  print(copplot)
+  
+  dev.off()
+  
+  wholeData <- rbind(wholeData, data_parellel)
+    
   # Pooled effects
   
   m.gen <- metagen(TE = es,
@@ -241,27 +304,27 @@ for (param in Params){
   )
   dev.off()
   
-  # Subgroup - pulse width
-  
-  m.gen_pulse <- update.meta(m.gen, 
-                             subgroup = data_control$pulse.width, 
-                             tau.common = TRUE)
-  
-  sink(file.path(resultPathPost, param, "subgroup", paste(param, "_pulse-meta-analysis.txt", sep = ""), fsep = "\\")); print(m.gen_pulse); sink()
-  
-  png(file = file.path(resultPathPost, param, "subgroup", paste(param, "_pulse_forestplot.png", sep = "")), width = 3500, height = 2600, res = 300)
-  forest.meta(m.gen_pulse, 
-              layout = "meta",
-              sortvar = TE,
-              print.tau2 = TRUE,
-              prediction = TRUE,
-              leftlabs = c("Study"),
-              leftcols = c("studlab"),
-              colgap.forest.left = "7cm",
-              colgap.forest.right = "2cm",
-              xlim = c(-3, 3)
-  )
-  dev.off()
+  # # Subgroup - pulse width
+  # 
+  # m.gen_pulse <- update.meta(m.gen, 
+  #                            subgroup = data_control$pulse.width, 
+  #                            tau.common = TRUE)
+  # 
+  # sink(file.path(resultPathPost, param, "subgroup", paste(param, "_pulse-meta-analysis.txt", sep = ""), fsep = "\\")); print(m.gen_pulse); sink()
+  # 
+  # png(file = file.path(resultPathPost, param, "subgroup", paste(param, "_pulse_forestplot.png", sep = "")), width = 3500, height = 2600, res = 300)
+  # forest.meta(m.gen_pulse, 
+  #             layout = "meta",
+  #             sortvar = TE,
+  #             print.tau2 = TRUE,
+  #             prediction = TRUE,
+  #             leftlabs = c("Study"),
+  #             leftcols = c("studlab"),
+  #             colgap.forest.left = "7cm",
+  #             colgap.forest.right = "2cm",
+  #             xlim = c(-3, 3)
+  # )
+  # dev.off()
   
   # Subgroup - Stim Type
   
@@ -282,8 +345,8 @@ for (param in Params){
               colgap.forest.left = "7cm",
               colgap.forest.right = "2cm",
               xlim = c(-3, 3)
-              )
-
+  )
+  
   dev.off()
   
   # Publication_Bias --------------------------------------------------------
@@ -505,10 +568,10 @@ for (param in Params){
   }
   
   # dur-pre Meta-analysis
-
+  
   dataDur <- data %>% filter(design == "control" &
-                    !is.na(mean.pre.active) & !is.na(mean.pre.sham) &
-                    !is.na(mean.dur.sham) & !is.na(mean.dur.active))
+                               !is.na(mean.pre.active) & !is.na(mean.pre.sham) &
+                               !is.na(mean.dur.sham) & !is.na(mean.dur.active))
   
   if (nrow(dataDur) >= 3){
     
@@ -604,3 +667,59 @@ for (param in Params){
     dev.off()
   }
 }
+
+
+wholeData$stim.type[wholeData$stim.type == "burst"] <- "intermittent"
+wholeData$stim.type[wholeData$stim.type == "slow burst"] <- "intermittent"
+wholeData$ESSym <- wholeData$es
+wholeData$ESSym[wholeData$ESSym > 0] <-  "Positive Effect Size"
+wholeData$ESSym[wholeData$ESSym < 0] <-  "Negative Effect Size"
+
+write.csv(wholeData, file.path(resultPathPost, "Extras", "wholeData.csv", sep = ""))
+
+# create a nested data frame giving the info of a nested dataset:
+
+data <- data.frame(
+  root=rep("root", nrow(wholeData)),
+  group=wholeData$index, 
+  subgroup= wholeData$ESSym,
+  subsubgroup= wholeData$intervention,
+  subsubsubgroup=wholeData$pulse.width,
+  subsubsubsubgroup=wholeData$frequency,
+  subsubsubsubsubgroup=wholeData$Author,
+  value=abs(wholeData$es)
+)
+
+data$pathString <- paste("world", data$group,
+                         data$subgroup,
+                         data$subsubgroup,
+                         data$subsubsubgroup,
+                         data$subsubsubsubgroup,
+                         data$subsubsubsubsubgroup, sep = "/")
+population <- as.Node(data)
+
+# Make the plot
+
+plot <- circlepackeR(population, size = "value", color_min = "#F7F2AB", color_max = "#AB0000")
+saveWidget(plot, file = file.path(resultPathPost, "Extras", "circularPacking_Sym_Int_Pulse_Freq_Stud.html"))
+
+# create 4D scatter plot in 3D space
+
+names(wholeData)[names(wholeData) == "es"] <- "ES"
+for (param in Params){
+  
+  fig <- plot_ly(wholeData[wholeData$index == param, ], x = ~frequency, y = ~pulse.width, z = ~-log(charge.per.session), 
+                 color = ~ES, text = ~Author, size = ~abs(ES), 
+                 marker = list(opacity = 0.8, sizemode = "diameter", sizeref = 1.5),
+                 type = "scatter3d", mode = "markers") %>% 
+    layout(title = paste("3D Scatter for", param, "Index"), scene = list(
+      xaxis = list(title = "Frequency"), 
+      yaxis = list(title = "Pulse Width"), 
+      zaxis = list(title = "-log(Charge per Session)")))
+      
+      
+    saveWidget(fig, file = file.path(resultPathPost, "Extras", paste(param, "_", "3DScatter.html", sep = "")))
+
+}
+  
+

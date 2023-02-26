@@ -1,35 +1,35 @@
 Review:     BRS _tVNS
 
-Number of studies combined: k = 4
+Number of studies combined: k = 3
 
-                        SMD            95%-CI    t p-value
-Random effects model 0.6147 [-2.8419; 4.0713] 0.57  0.6110
+                              SMD            95%-CI     t p-value
+Random effects model (HK) -0.4122 [-2.0290; 1.2046] -1.10  0.3871
 
 Quantifying heterogeneity:
- tau^2 = 3.8640 [0.8142; 71.2511]; tau = 1.9657 [0.9024; 8.4410]
- I^2 = 85.7% [64.9%; 94.2%]; H = 2.64 [1.69; 4.14]
+ tau^2 = 0.2260 [0.0000; 15.1747]; tau = 0.4754 [0.0000; 3.8955]
+ I^2 = 47.8% [0.0%; 84.7%]; H = 1.38 [1.00; 2.56]
 
 Quantifying residual heterogeneity:
- tau^2 = 4.3487 [0.6273; 100.0000]; tau = 2.0854 [0.7920; 10.0000]
- I^2 = 84.2% [52.7%; 94.7%]; H = 2.52 [1.45; 4.35]
+ tau^2 = 0 [0.0000; 0.0000]; tau = 0 [0.0000; 0.0000]
+ I^2 = 0.0%; H = 1.00
 
 Test of heterogeneity:
-     Q d.f. p-value
- 20.98    3  0.0001
+    Q d.f. p-value
+ 3.83    2  0.1472
 
-Results for subgroups (random effects model):
-                          k     SMD            95%-CI  tau^2    tau     Q   I^2
-intervention = tragus     3  1.2403 [-4.4298; 6.9104] 4.3487 2.0854 12.65 84.2%
-intervention = L-concha   1 -1.0505 [-5.2095; 3.1086] 4.3487 2.0854  0.00    --
+Results for subgroups (random effects model (HK)):
+                          k     SMD             95%-CI tau^2 tau    Q  I^2
+intervention = tragus     2  0.0302 [-0.0975;  0.1579]     0   0 0.00 0.0%
+intervention = L-concha   1 -1.0505 [-1.8202; -0.2807]     0   0 0.00   --
 
-Test for subgroup differences (random effects model):
-                   Q d.f. p-value
-Between groups  0.84    1  0.3591
-Within groups  12.65    2  0.0018
+Test for subgroup differences (random effects model (HK)):
+                  Q d.f. p-value
+Between groups 7.57    1  0.0059
+Within groups  0.00    1  0.9793
 
 Details on meta-analytical method:
 - Inverse variance method
 - Restricted maximum-likelihood estimator for tau^2
   (assuming common tau^2 in subgroups)
-- Q-profile method for confidence interval of tau^2 and tau
-- Hartung-Knapp adjustment for random effects model
+- Q-Profile method for confidence interval of tau^2 and tau
+- Hartung-Knapp (HK) adjustment for random effects model (df = 2)

@@ -2,8 +2,8 @@ Review:     PNN50 _tVNS
 
 Number of studies combined: k = 3
 
-                        SMD            95%-CI    t p-value
-Random effects model 0.2964 [-0.9129; 1.5057] 1.05  0.4022
+                             SMD            95%-CI    t p-value
+Random effects model (HK) 0.2964 [-0.9129; 1.5057] 1.05  0.4022
 
 Quantifying heterogeneity:
  tau^2 = 0.1513 [0.0000; 10.9521]; tau = 0.3889 [0.0000; 3.3094]
@@ -17,12 +17,12 @@ Test of heterogeneity:
     Q d.f. p-value
  6.29    2  0.0431
 
-Results for subgroups (random effects model):
+Results for subgroups (random effects model (HK)):
                          k    SMD            95%-CI  tau^2    tau    Q   I^2
 stim.type = continuous   2 0.4552 [-5.5889; 6.4992] 0.3819 0.6180 6.09 83.6%
 stim.type = slow burst   1 0.1108 [-1.1483; 1.3698] 0.3819 0.6180 0.00    --
 
-Test for subgroup differences (random effects model):
+Test for subgroup differences (random effects model (HK)):
                   Q d.f. p-value
 Between groups 0.19    1  0.6665
 Within groups  6.09    1  0.0136
@@ -31,5 +31,5 @@ Details on meta-analytical method:
 - Inverse variance method
 - Restricted maximum-likelihood estimator for tau^2
   (assuming common tau^2 in subgroups)
-- Q-profile method for confidence interval of tau^2 and tau
-- Hartung-Knapp adjustment for random effects model
+- Q-Profile method for confidence interval of tau^2 and tau
+- Hartung-Knapp (HK) adjustment for random effects model (df = 2)

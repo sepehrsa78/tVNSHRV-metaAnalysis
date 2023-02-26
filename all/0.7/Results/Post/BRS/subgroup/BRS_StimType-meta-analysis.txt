@@ -1,34 +1,34 @@
 Review:     BRS _tVNS
 
-Number of studies combined: k = 4
+Number of studies combined: k = 3
 
-                        SMD            95%-CI    t p-value
-Random effects model 0.6147 [-2.8419; 4.0713] 0.57  0.6110
+                              SMD            95%-CI     t p-value
+Random effects model (HK) -0.4122 [-2.0290; 1.2046] -1.10  0.3871
 
 Quantifying heterogeneity:
- tau^2 = 3.8640 [0.8142; 71.2511]; tau = 1.9657 [0.9024; 8.4410]
- I^2 = 85.7% [64.9%; 94.2%]; H = 2.64 [1.69; 4.14]
+ tau^2 = 0.2260 [0.0000; 15.1747]; tau = 0.4754 [0.0000; 3.8955]
+ I^2 = 47.8% [0.0%; 84.7%]; H = 1.38 [1.00; 2.56]
 
 Quantifying residual heterogeneity:
- tau^2 = 3.8640 [0.8142; 71.2511]; tau = 1.9657 [0.9024; 8.4410]
- I^2 = 85.7% [64.9%; 94.2%]; H = 2.64 [1.69; 4.14]
+ tau^2 = 0.2260 [0.0000; 15.1747]; tau = 0.4754 [0.0000; 3.8955]
+ I^2 = 47.8% [0.0%; 84.7%]; H = 1.38 [1.00; 2.56]
 
 Test of heterogeneity:
-     Q d.f. p-value
- 20.98    3  0.0001
+    Q d.f. p-value
+ 3.83    2  0.1472
 
-Results for subgroups (random effects model):
-                         k    SMD            95%-CI  tau^2    tau     Q   I^2
-stim.type = continuous   4 0.6147 [-2.8419; 4.0713] 3.8640 1.9657 20.98 85.7%
+Results for subgroups (random effects model (HK)):
+                         k     SMD            95%-CI  tau^2    tau    Q   I^2
+stim.type = continuous   3 -0.4122 [-2.0290; 1.2046] 0.2260 0.4754 3.83 47.8%
 
-Test for subgroup differences (random effects model):
-                   Q d.f. p-value
-Between groups  0.00    0      --
-Within groups  20.98    3  0.0001
+Test for subgroup differences (random effects model (HK)):
+                  Q d.f. p-value
+Between groups 0.00    0      --
+Within groups  3.83    2  0.1472
 
 Details on meta-analytical method:
 - Inverse variance method
 - Restricted maximum-likelihood estimator for tau^2
   (assuming common tau^2 in subgroups)
-- Q-profile method for confidence interval of tau^2 and tau
-- Hartung-Knapp adjustment for random effects model
+- Q-Profile method for confidence interval of tau^2 and tau
+- Hartung-Knapp (HK) adjustment for random effects model (df = 2)

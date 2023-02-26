@@ -15,10 +15,10 @@ F(df1 = 1, df2 = 9) = 0.2201, p-val = 0.6501
 
 Model Results:
 
-         estimate      se     tval  df    pval    ci.lb   ci.ub 
+         estimate      se     tval  df    pval    ci.lb   ci.ub    
 intrcpt   -0.0284  0.1687  -0.1680   9  0.8703  -0.4101  0.3534    
 mods       0.4376  0.9327   0.4691   9  0.6501  -1.6724  2.5475    
 
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 â€˜***â€™ 0.001 â€˜**â€™ 0.01 â€˜*â€™ 0.05 â€˜.â€™ 0.1 â€˜ â€™ 1
 

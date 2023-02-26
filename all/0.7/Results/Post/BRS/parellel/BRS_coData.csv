@@ -1,0 +1,4 @@
+"","Author","n.active","n.sham","male.ratio","age.total","frequency","pulse.width","rms.value","charge.per.session","es","se","stim.type","intervention","sham.strategy","index"
+"1","Antonino et al. (2017) #1",4,4,1,23,30,200,0.00348568501158668,0.243,0.0201000348488407,0.548873879527792,"continuous","tragus","tragus off","BRS"
+"2","Antonino et al. (2017) #2",4,4,1,23,30,200,0.00348568501158668,0.243,0.0402000696976814,0.548643808406066,"continuous","tragus","earlobe on","BRS"
+"3","Ganchrva et al. (2017)",10,10,0.8,51.1,25,250,7.90569415042095e-05,0.00525,-1.05045399650001,0.39274369336471,"continuous","L-concha","ear","BRS"

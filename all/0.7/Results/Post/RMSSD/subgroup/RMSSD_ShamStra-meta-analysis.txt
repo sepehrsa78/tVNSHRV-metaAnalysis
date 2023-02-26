@@ -1,34 +1,33 @@
 Review:     RMSSD _tVNS
 
-Number of studies combined: k = 13
+Number of studies combined: k = 12
 
-                        SMD            95%-CI    t p-value
-Random effects model 0.0158 [-0.0515; 0.0832] 0.51  0.6176
+                             SMD            95%-CI    t p-value
+Random effects model (HK) 0.0117 [-0.0610; 0.0844] 0.35  0.7298
 
 Quantifying heterogeneity:
- tau^2 = 0; tau = 0; I^2 = 0.0% [0.0%; 56.6%]; H = 1.00 [1.00; 1.52]
+ tau^2 = 0; tau = 0; I^2 = 0.0% [0.0%; 58.3%]; H = 1.00 [1.00; 1.55]
 
 Quantifying residual heterogeneity:
  tau^2 = 0; tau = 0; I^2 = 0.0% [0.0%; 62.4%]; H = 1.00 [1.00; 1.63]
 
 Test of heterogeneity:
     Q d.f. p-value
- 3.68   12  0.9885
+ 3.60   11  0.9801
 
-Results for subgroups (random effects model):
-                                  k     SMD            95%-CI tau^2 tau    Q  I^2
-sham.strategy = concha            4 -0.0182 [-0.1206; 0.0841]     0   0 0.36 0.0%
-sham.strategy = ear               7  0.0317 [-0.1004; 0.1638]     0   0 3.06 0.0%
-sham.strategy = N/A               1  0.0134 [-0.6973; 0.7242]     0   0 0.00   --
-sham.strategy = tragus - concha   1  0.0753 [-0.3534; 0.5041]     0   0 0.00   --
+Results for subgroups (random effects model (HK)):
+                         k     SMD            95%-CI tau^2 tau    Q  I^2
+sham.strategy = concha   4 -0.0182 [-0.1206; 0.0841]     0   0 0.36 0.0%
+sham.strategy = ear      7  0.0317 [-0.1004; 0.1638]     0   0 3.06 0.0%
+sham.strategy = N/A      1  0.0134 [-0.6973; 0.7242]     0   0 0.00   --
 
-Test for subgroup differences (random effects model):
+Test for subgroup differences (random effects model (HK)):
                   Q d.f. p-value
-Between groups 0.77    3  0.8578
+Between groups 0.63    2  0.7289
 Within groups  3.43    9  0.9449
 
 Details on meta-analytical method:
 - Inverse variance method
 - Restricted maximum-likelihood estimator for tau^2
   (assuming common tau^2 in subgroups)
-- Hartung-Knapp adjustment for random effects model
+- Hartung-Knapp (HK) adjustment for random effects model (df = 11)

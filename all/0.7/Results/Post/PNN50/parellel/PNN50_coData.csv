@@ -1,0 +1,4 @@
+"","Author","n.active","n.sham","male.ratio","age.total","frequency","pulse.width","rms.value","charge.per.session","es","se","stim.type","intervention","sham.strategy","index"
+"1","Geng et al. (2022)",14,14,0.5714,23.42,20,250,0.000174284250579334,0.02025,0.980190070282447,0.346449984737042,"continuous","L-tragus","ear","PNN50"
+"2","Shen et al. (2021) #1",42,42,0.476,21.67,500,500,0.000223606797749979,0.0225,0.110750341709243,0.17544015347525,"slow burst","L-concha","concha","PNN50"
+"3","Shen et al. (2021) #2",42,42,0.476,21.67,25,500,0.000223606797749979,0.0225,0.0242010005957236,0.17360087671811,"continuous","L-concha","concha","PNN50"

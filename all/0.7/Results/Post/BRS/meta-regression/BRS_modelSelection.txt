@@ -18,12 +18,12 @@ Global model call: metafor::rma(yi = TE, sei = seTE, mods = form, data = glm.dat
     method = method, test = test)
 ---
 Model selection table 
-   (Int) pls.wdt rms.val df logLik  AICc delta weight
-6      +                  4 -0.319 -31.4     0    0.2
-14     +       +          4 -0.319 -31.4     0    0.2
-22     +                  4 -0.319 -31.4     0    0.2
-30     +       +          4 -0.319 -31.4     0    0.2
-21     +          -1.254  4 -0.319 -31.4     0    0.2
+   (Int) pls.wdt df logLik  AICc delta weight
+5      +          3 -0.319 -17.4     0    0.2
+13     +       +  3 -0.319 -17.4     0    0.2
+21     +          3 -0.319 -17.4     0    0.2
+29     +       +  3 -0.319 -17.4     0    0.2
+9      +          3 -0.319 -17.4     0    0.2
 Models ranked by AICc(x) 
 
 
@@ -31,13 +31,13 @@ Multimodel Inference Coefficients
 --------------------------
 
 
-                       Estimate   Std. Error   z value  Pr(>|z|)
-intrcpt            -11.45425644  17.66888074 0.6482729 0.5168085
-age.total            0.11640860   0.11616404 1.0021053 0.3162927
-frequency            0.37119536   0.46797915 0.7931878 0.4276684
-rms.value          -57.21654137 280.05094430 0.2043076 0.8381131
-charge.per.session   0.82642776   4.01236678 0.2059701 0.8368142
-pulse.width         -0.01855977   0.03794058 0.4891799 0.6247143
+                       Estimate  Std. Error   z value  Pr(>|z|)
+intrcpt            -0.391763219 2.685314923 0.1458910 0.8840075
+frequency           0.027886665 0.072458963 0.3848615 0.7003400
+pulse.width        -0.001394333 0.005309960 0.2625883 0.7928679
+charge.per.session  0.001172941 0.001989052 0.5896982 0.5553930
+rms.value           0.010232503 0.056050796 0.1825577 0.8551451
+age.total          -0.019848160 0.019221375 1.0326087 0.3017870
 
 
 Predictor Importance
@@ -45,7 +45,7 @@ Predictor Importance
 
 
                model importance
-1 charge.per.session       0.60
-2        pulse.width       0.36
-3          rms.value       0.20
-4          frequency       0.16
+1        pulse.width 0.45161290
+2          frequency 0.38709677
+3 charge.per.session 0.25806452
+4          rms.value 0.03225806
