@@ -156,13 +156,13 @@ for (param in Params){
   data_parellel$index <- rep(param, nrow(data_parellel))
   
   copBplot <- ggparcoord(data_parellel,
-             columns = c(8:10), groupColumn = 13,
-             scale="std",
-             missing = "exclude",
-             showPoints = TRUE, 
-             title ="Stimulation Parameters' and the Effect Size Distribution",
-             alphaLines = .3,
-             boxplot = TRUE,
+                         columns = c(8:10), groupColumn = 13,
+                         scale="std",
+                         missing = "exclude",
+                         showPoints = TRUE, 
+                         title ="Stimulation Parameters' and the Effect Size Distribution",
+                         alphaLines = .3,
+                         boxplot = TRUE,
   ) + scale_color_brewer(palette = "Set1") +
     theme_minimal() +
     theme(
@@ -171,7 +171,7 @@ for (param in Params){
     xlab("")
   
   copplot <- ggparcoord(data_parellel,
-                        columns = c(8:11), groupColumn = 13,
+                        columns = c(8:10), groupColumn = 13,
                         scale="std",
                         missing = "exclude",
                         showPoints = TRUE, 
@@ -198,7 +198,7 @@ for (param in Params){
   dev.off()
   
   wholeData <- rbind(wholeData, data_parellel)
-    
+  
   # Pooled effects
   
   m.gen <- metagen(TE = es,
@@ -676,6 +676,7 @@ wholeData$ESSym[wholeData$ESSym > 0] <-  "Positive Effect Size"
 wholeData$ESSym[wholeData$ESSym < 0] <-  "Negative Effect Size"
 
 write.csv(wholeData, file.path(resultPathPost, "Extras", "wholeData.csv", sep = ""))
+wholeData <- read.csv(file.path(resultPathPost, "Extras", "wholeData.csv", sep = ""))
 
 # create a nested data frame giving the info of a nested dataset:
 
@@ -700,7 +701,7 @@ population <- as.Node(data)
 
 # Make the plot
 
-plot <- circlepackeR(population, size = "value", color_min = "#F7F2AB", color_max = "#AB0000")
+plot <- circlepackeR(population, size = "value", color_min = "#F0FFED", color_max = "#007B04")
 saveWidget(plot, file = file.path(resultPathPost, "Extras", "circularPacking_Sym_Int_Pulse_Freq_Stud.html"))
 
 # create 4D scatter plot in 3D space
@@ -709,17 +710,23 @@ names(wholeData)[names(wholeData) == "es"] <- "ES"
 for (param in Params){
   
   fig <- plot_ly(wholeData[wholeData$index == param, ], x = ~frequency, y = ~pulse.width, z = ~-log(charge.per.session), 
-                 color = ~ES, text = ~Author, size = ~abs(ES), 
+                 color = ~ES, text = ~pulse.width, hoverinfo = "text",
+                 hovertext = ~paste("Author: ", Author, "<br>", 
+                                    "ES: ", ES, "<br>",
+                                    "Frequency: ", frequency, "<br>",
+                                    "Pulse Width: ", pulse.width, "<br>",
+                                    "-log(Charge Per Session): ", -log(charge.per.session), "<br>"),
+                 size = ~abs(ES), 
                  marker = list(opacity = 0.8, sizemode = "diameter", sizeref = 1.5),
                  type = "scatter3d", mode = "markers") %>% 
     layout(title = paste("3D Scatter for", param, "Index"), scene = list(
       xaxis = list(title = "Frequency"), 
       yaxis = list(title = "Pulse Width"), 
       zaxis = list(title = "-log(Charge per Session)")))
-      
-      
-    saveWidget(fig, file = file.path(resultPathPost, "Extras", paste(param, "_", "3DScatter.html", sep = "")))
-
-}
   
+  
+  saveWidget(fig, file = file.path(resultPathPost, "Extras", paste(param, "_", "3DScatter.html", sep = "")))
+  
+}
+
 
