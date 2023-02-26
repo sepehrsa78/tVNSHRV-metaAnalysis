@@ -171,7 +171,7 @@ for (param in Params){
     xlab("")
   
   copplot <- ggparcoord(data_parellel,
-                        columns = c(6:11), groupColumn = 13,
+                        columns = c(8:11), groupColumn = 13,
                         scale="std",
                         missing = "exclude",
                         showPoints = TRUE, 
